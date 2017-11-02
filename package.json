@@ -1,26 +1,16 @@
 {
-  "name": "wink-distance",
-  "version": "1.3.0",
-  "description": "Distance/Similarity functions for Bag of Words, Strings, Numbers, Dates and Vectors.",
+  "name": "wink-sentiment",
+  "version": "1.0.0",
+  "description": "Accurate and fast sentiment scoring of phrases with emoticons :) & emojis 🎉",
   "keywords": [
-    "Distance",
-    "Similarity",
-    "NLP",
-    "Bag of Words",
-    "Strings",
-    "Vectors",
-    "Chebyshev",
-    "Cosine",
-    "Hamming",
-    "Jaccard",
-    "Jaro",
-    "Manhattan",
-    "Soundex",
-    "Tversky",
-    "Taxicab",
+    "AFINN",
+    "Sentiment",
+    "Sentiment Analysis",
+    "Emoticons",
+    "Emojis",
     "wink"
   ],
-  "main": "src/wink-distance.js",
+  "main": "src/wink-sentiment.js",
   "scripts": {
     "pretest": "npm run lint && npm run hint && npm run docs",
     "test": "istanbul cover _mocha ./test/",
@@ -32,14 +22,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/winkjs/wink-distance.git"
+    "url": "git+https://github.com/winkjs/wink-sentiment.git"
   },
   "author": "Sanjaya Kumar Saxena",
   "license": "AGPL-3.0",
   "bugs": {
-    "url": "https://github.com/winkjs/wink-distance/issues"
+    "url": "https://github.com/winkjs/wink-sentiment/issues"
   },
-  "homepage": "https://github.com/winkjs/wink-distance#readme",
+  "homepage": "https://github.com/winkjs/wink-sentiment#readme",
   "devDependencies": {
     "chai": "^4.1.0",
     "coveralls": "^3.0.0",
