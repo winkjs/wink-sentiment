@@ -51,10 +51,5 @@
     "mocha": "^4.0.1",
     "mocha-lcov-reporter": "^1.2.0"
   },
-  "runkitExampleFilename": "./runkit/example.js",
-  "dependencies": {
-    "wink-helpers": "^1.2.0",
-    "wink-jaro-distance": "^1.0.3",
-    "wink-nlp-utils": "^1.5.0"
-  }
+  "runkitExampleFilename": "./runkit/example.js"
 }
