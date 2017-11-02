@@ -104,7 +104,7 @@ var analyze = function ( sentence ) {
     }
   }
   // To avoid division by 0!
-  if ( words === 0 ) words = 1;
+  // if ( words === 0 ) words = 1;
   // Return score and its normalized value.
   return { score: ss, normalizedScore: ( ss / words ) };
 };
