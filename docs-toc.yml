@@ -1,0 +1,19 @@
+toc:
+  - name: Introduction
+    file: README.md
+  - name: bow
+  - bow.cosine
+  - name: number
+  - number.hamming
+  - name: set
+  - set.jaccard
+  - set.tversky
+  - name: string
+  - string.hamming
+  - string.hammingNormalized
+  - string.jaro
+  - string.jaroWinkler
+  - string.soundex
+  - name: vector
+  - vector.chebyshev
+  - vector.taxicab
