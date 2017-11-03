@@ -3,6 +3,7 @@
 var chai = require( 'chai' );
 var mocha = require( 'mocha' );
 var ws = require( '../src/wink-sentiment.js' );
+var fs = require( 'fs' );
 
 var expect = chai.expect;
 var describe = mocha.describe;
@@ -54,5 +55,34 @@ describe( 'basic test cycle', function () {
   it( 'should throw error with non-string input', function () {
     expect( ws.bind( null ) ).to.throw( 'wink-sentiment: input phrase must be a string, instead found: undefined' );
     expect( ws.bind( 10 ) ).to.throw( 'wink-sentiment: input phrase must be a string, instead found: undefined' );
+  } );
+} );
+
+describe( 'validate with amazon product review data from UCI', function () {
+  // To be on safe side with travis!
+  this.timeout(3600);
+  // Load Amazon Product Review [Sentiment Labelled Sentences Data Set](https://archive.ics.uci.edu/ml/machine-learning-databases/00331/)
+  // at [UCI Machine Learning Repository](https://archive.ics.uci.edu/ml/index.php).
+  var input = fs.readFileSync( './test/data/amazon_cells_labelled.txt', 'utf8' ).split( '\n' );
+
+  input.pop();
+  var fn = 0,
+      fp = 0,
+      tn = 0,
+      tp = 0;
+  input.forEach( function ( row ) {
+    var cols = row.split( '\t' );
+    if ( +cols[ 1 ] === 1 ) {
+      if ( ws( cols[0] ).score >= 0 ) tp += 1;
+      if ( ws( cols[0] ).score < 0 ) fp += 1;
+    } else {
+      if ( ws( cols[0] ).score < 0 ) tn += 1;
+      if ( ws( cols[0] ).score >= 0 ) fn += 1;
+    }
+  } );
+
+  // Reduce verbosity of test output by moving `it` outside the `forEach`.
+  it( 'it should achieve an accuracy of 77%', function () {
+    expect( Math.round( ( tp + tn ) * 100 / ( tp + tn + fp + fn ) ) ).to.deep.equal( 77 );
   } );
 } );
