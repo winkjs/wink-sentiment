@@ -58,7 +58,7 @@ describe( 'basic test cycle', function () {
 
   it( 'should throw error with non-string input', function () {
     expect( ws.bind( null ) ).to.throw( 'wink-sentiment: input phrase must be a string, instead found: undefined' );
-    expect( ws.bind( 10 ) ).to.throw( 'wink-sentiment: input phrase must be a string, instead found: undefined' );
+    expect( ws.bind( null, 10 ) ).to.throw( 'wink-sentiment: input phrase must be a string, instead found: number' );
   } );
 } );
 
@@ -78,15 +78,29 @@ describe( 'validate with amazon product review data from UCI', function () {
     var cols = row.split( '\t' );
     if ( +cols[ 1 ] === 1 ) {
       if ( ws( cols[0] ).score >= 0 ) tp += 1;
-      if ( ws( cols[0] ).score < 0 ) fp += 1;
+      if ( ws( cols[0] ).score < 0 ) fn += 1;
     } else {
       if ( ws( cols[0] ).score < 0 ) tn += 1;
-      if ( ws( cols[0] ).score >= 0 ) fn += 1;
+      if ( ws( cols[0] ).score >= 0 ) fp += 1;
     }
   } );
 
+  var precision = tp / ( tp + fp );
+  var recall = tp / ( tp + fn );
   // Reduce verbosity of test output by moving `it` outside the `forEach`.
   it( 'it should achieve an accuracy of 77%', function () {
-    expect( Math.round( ( tp + tn ) * 100 / ( tp + tn + fp + fn ) ) ).to.deep.equal( 77 );
+    expect( Math.round( ( tp + tn ) * 100 / ( tp + tn + fp + fn ) ) ).to.equal( 77 );
+  } );
+
+  it( 'it should achieve an recall of 98%', function () {
+    expect( Math.round( recall * 100 ) ).to.equal( 98 );
+  } );
+
+  it( 'it should achieve an precision of 69%', function () {
+    expect( Math.round( precision * 100 ) ).to.equal( 69 );
+  } );
+
+  it( 'it should achieve an f-measure of 0.81', function () {
+    expect( +( 2 * precision * recall / ( precision + recall ) ).toFixed( 2 ) ).to.equal( 0.81 );
   } );
 } );
