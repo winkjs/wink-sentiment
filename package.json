@@ -4,10 +4,13 @@
   "description": "Accurate and fast sentiment scoring of phrases with emoticons :) & emojis 🎉",
   "keywords": [
     "AFINN",
+    "Emojis",
+    "Emoticons",
+    "Natural Language Processing",
+    "NLP",
     "Sentiment",
     "Sentiment Analysis",
-    "Emoticons",
-    "Emojis",
+    "Sentiment Classification",
     "wink"
   ],
   "main": "src/wink-sentiment.js",
