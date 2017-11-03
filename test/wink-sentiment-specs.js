@@ -50,4 +50,9 @@ describe( 'basic test cycle', function () {
   it( 'should return a score of 0/0 with "xxx"', function () {
     expect( ws( 'xxx' ) ).to.deep.equal( { score: 0, normalizedScore: 0 } );
   } );
+
+  it( 'should throw error with non-string input', function () {
+    expect( ws.bind( null ) ).to.throw( 'wink-sentiment: input phrase must be a string, instead found: undefined' );
+    expect( ws.bind( 10 ) ).to.throw( 'wink-sentiment: input phrase must be a string, instead found: undefined' );
+  } );
 } );
