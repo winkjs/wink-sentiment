@@ -40,11 +40,14 @@ var rgxEmojis = /([\uD800-\uDBFF][\uDC00-\uDFFF]|[\u2600-\u26FF]|[\u2700-\u27BF]
 // Used to expant elisions.
 var rgxNotElision = /([a-z])(n\'t)\b/gi;
 
-var analyze = function ( sentence ) {
-  // Early exit.
-  if ( sentence.length === 0 ) return { score: 0, normalizedScore: 0 };
+var analyze = function ( phrase ) {
+  if ( typeof phrase !== 'string' ) {
+    throw Error( 'wink-sentiment: input phrase must be a string, instead found: ' + typeof phrase );
+  }
   // Preprocess the sentence.
-  var s = sentence.trim().replace( rgxSpaces, ' ' ).replace( rgxNotElision, '$1 not' );
+  var s = phrase.trim().replace( rgxSpaces, ' ' ).replace( rgxNotElision, '$1 not' );
+  // Early exit.
+  if ( s.length === 0 ) return { score: 0, normalizedScore: 0 };
   // These tokens will contain text and emojis. The text part will be tokenized later.
   var tokens = s.split( rgxEmojis );
   // The emoticon & word tokens.

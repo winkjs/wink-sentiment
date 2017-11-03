@@ -12,6 +12,7 @@ var it = mocha.it;
 describe( 'basic test cycle', function () {
   it( 'should return a score of 0 with empty text', function () {
     expect( ws( '' ) ).to.deep.equal( { score: 0, normalizedScore: 0 } );
+    expect( ws( '  ' ) ).to.deep.equal( { score: 0, normalizedScore: 0 } );
   } );
 
   it( 'should return a score of 4/1.333 with "I am feeling good"', function () {
