@@ -24,6 +24,10 @@ describe( 'basic test cycle', function () {
     expect( ws( 'not a good product' ) ).to.deep.equal( { score: -3, normalizedScore: -1 } );
   } );
 
+  it( 'should return a score of 3/1.5 with "not a good product"', function () {
+    expect( ws( 'good product' ) ).to.deep.equal( { score: 3, normalizedScore: 1.5 } );
+  } );
+
   it( 'should return a score of -2/-1 with "bad luck"', function () {
     expect( ws( 'bad luck' ) ).to.deep.equal( { score: -2, normalizedScore: -1 } );
   } );

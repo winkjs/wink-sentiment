@@ -40,7 +40,25 @@ var rgxEmojis = /([\uD800-\uDBFF][\uDC00-\uDFFF]|[\u2600-\u26FF]|[\u2700-\u27BF]
 // Used to expant elisions.
 var rgxNotElision = /([a-z])(n\'t)\b/gi;
 
-var analyze = function ( phrase ) {
+// ### analyzeSentiment
+/**
+ *
+ * Computes the absolue  and normalized sentiment scores of the input `phrase`.
+ * The normalized score is computed by dividing the absolute score by the number
+ * of tokens; this is always between -5 and +5. A score of **less than 0** indicates
+ * negative sentiments and a score of **more than 0** indicates positive sentiments;
+ * wheras a **near zero** score suggests a neutral sentiment.
+ *
+ * @param {string} phrase — whoes sentiment score needs to be computed.
+ * @return {object} — absolute `score` and `normalizedScore` of `phrase`.
+ *
+ * @example
+ * analyzeSentiment( 'not a good product' );
+ * // -> { score: -3, normalizedScore: -1 }
+ * analyzeSentiment( 'Excited to be part of the @imascientist team for the next couple of weeks!' );
+ * // { score: 3, normalizedScore: 0.21428571428571427 }
+ */
+var analyzeSentiment = function ( phrase ) {
   if ( typeof phrase !== 'string' ) {
     throw Error( 'wink-sentiment: input phrase must be a string, instead found: ' + typeof phrase );
   }
@@ -110,6 +128,6 @@ var analyze = function ( phrase ) {
   // if ( words === 0 ) words = 1;
   // Return score and its normalized value.
   return { score: ss, normalizedScore: ( ss / words ) };
-};
+}; // analyzeSentiment()
 
-module.exports = analyze;
+module.exports = analyzeSentiment;
