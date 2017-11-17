@@ -13,7 +13,9 @@ It is based on [AFINN](https://arxiv.org/abs/1103.2903) and [Emoji Sentiment Ran
 1. Intelligent negation handling; for example, phrase "good product" will get a positive score whereas "not a good product" gets a negative score.
 2. Automatic detection and scoring of two-word phrases in a text; for example, "cool stuff", "well done", and "short sighted".
 3. Processes each emoji and/or emoticon separately while scoring.
-4. Achieves accuracy of 77%, when validated using Amazon Product Review [Sentiment Labelled Sentences Data Set](https://archive.ics.uci.edu/ml/machine-learning-databases/00331/) at
+4. Embeds a powerful tokenizer.
+5. Returns the sentiment score and tokens. Each token contains a set of properties defining its sentiment, if any.
+6. Achieves accuracy of 77%, when validated using Amazon Product Review [Sentiment Labelled Sentences Data Set](https://archive.ics.uci.edu/ml/machine-learning-databases/00331/) at
 [UCI Machine Learning Repository](https://archive.ics.uci.edu/ml/index.php).
 
 
