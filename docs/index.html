@@ -105,14 +105,30 @@ Software Foundation, version 3 of the License.</p>
   </div>
   
 
-  <p>Computes the absolue and normalized sentiment scores of the input <code>phrase</code>.
-The normalized score is computed by dividing the absolute score by the number
+  <p>Computes the absolue and normalized sentiment scores of the input <code>phrase</code>,
+after tokenizing it.</p>
+<p>The normalized score is computed by dividing the absolute score by the number
 of tokens; this is always between -5 and +5. A score of less than 0 indicates
 negative sentiments and a score of more than 0 indicates positive sentiments;
-wheras a near zero score suggests a neutral sentiment.</p>
+wheras a near zero score suggests a neutral sentiment. While counting tokens
+only the ones tagged as <strong><code>word</code></strong>, <strong><code>emoji</code></strong>, or <strong><code>emoticon</code></strong> are counted;
+and one letter words are ignored.</p>
+<p>It performs tokenization using <a href="http://winkjs.org/wink-tokenizer/">wink-tokenizer</a>.
+During sentiment analysis, each token may be assigned up to 3 new properties.
+These properties are:</p>
+<ol>
+<li><strong><code>score</code></strong> — contains the sentiment score of the word, which is always
+between -5 and +5. This is added only when the word in question has a positive or
+negative sentiment associated with it.</li>
+<li><strong><code>negation</code></strong> — is added &#x26; set to <strong>true</strong> whenever the <code>score</code> of the
+token has beeen impacted due to a negation word apprearing prior to it.</li>
+<li><strong><code>grouped</code></strong> — is added whenever, the token is the first
+word of a short idom or a phrase. It's value provides the number of tokens
+that have been grouped together to form the phrase/idom.</li>
+</ol>
 
 
-  <div class='pre p1 fill-light mt0'>sentiment(phrase: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></div>
+  <div class='pre p1 fill-light mt0'>sentiment(phrase: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></div>
   
   
 
@@ -129,7 +145,7 @@ wheras a near zero score suggests a neutral sentiment.</p>
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>phrase</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>>)</code>
+            <span class='code bold'>phrase</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
 	    — whoes sentiment score needs to be computed.
 
           </div>
@@ -165,22 +181,32 @@ wheras a near zero score suggests a neutral sentiment.</p>
     <div class='py1 quiet mt1 prose-big'>Example</div>
     
       
-      <pre class='p1 overflow-auto round fill-light'>sentiment( [ { <span class="hljs-attr">token</span>: <span class="hljs-string">'not'</span>, <span class="hljs-attr">tag</span>: <span class="hljs-string">'word'</span> },
-                    { <span class="hljs-attr">token</span>: <span class="hljs-string">'a'</span>, <span class="hljs-attr">tag</span>: <span class="hljs-string">'word'</span> },
-                    { <span class="hljs-attr">token</span>: <span class="hljs-string">'good'</span>, <span class="hljs-attr">tag</span>: <span class="hljs-string">'word'</span> },
-                    { <span class="hljs-attr">token</span>: <span class="hljs-string">'product'</span>, <span class="hljs-attr">tag</span>: <span class="hljs-string">'word'</span> } ] );
-<span class="hljs-comment">// -&gt; { score: -3, normalizedScore: -1 }</span>
-sentiment( [ { <span class="hljs-attr">token</span>: <span class="hljs-string">'Excited'</span>, <span class="hljs-attr">tag</span>: <span class="hljs-string">'word'</span> },
-                    { <span class="hljs-attr">token</span>: <span class="hljs-string">'to'</span>, <span class="hljs-attr">tag</span>: <span class="hljs-string">'word'</span> },
-                    { <span class="hljs-attr">token</span>: <span class="hljs-string">'be'</span>, <span class="hljs-attr">tag</span>: <span class="hljs-string">'word'</span> },
-                    { <span class="hljs-attr">token</span>: <span class="hljs-string">'part'</span>, <span class="hljs-attr">tag</span>: <span class="hljs-string">'word'</span> },
-                    { <span class="hljs-attr">token</span>: <span class="hljs-string">'of'</span>, <span class="hljs-attr">tag</span>: <span class="hljs-string">'word'</span> },
-                    { <span class="hljs-attr">token</span>: <span class="hljs-string">'the'</span>, <span class="hljs-attr">tag</span>: <span class="hljs-string">'word'</span> },
-                    { <span class="hljs-attr">token</span>: <span class="hljs-string">'@imascientist'</span>, <span class="hljs-attr">tag</span>: <span class="hljs-string">'mention'</span> },
-                    { <span class="hljs-attr">token</span>: <span class="hljs-string">'team'</span>, <span class="hljs-attr">tag</span>: <span class="hljs-string">'word'</span> },
-                    { <span class="hljs-attr">token</span>: <span class="hljs-string">':-)'</span>, <span class="hljs-attr">tag</span>: <span class="hljs-string">'emoticon'</span> },
-                    { <span class="hljs-attr">token</span>: <span class="hljs-string">'!'</span>, <span class="hljs-attr">tag</span>: <span class="hljs-string">'punctuation'</span> } ] );
-<span class="hljs-comment">// { score: 3, normalizedScore: 0.21428571428571427 }</span></pre>
+      <pre class='p1 overflow-auto round fill-light'>sentiment( <span class="hljs-string">'not a good product'</span> );
+<span class="hljs-comment">// -&gt; { score: -3,</span>
+<span class="hljs-comment">//      normalizedScore: -1,</span>
+<span class="hljs-comment">//      tokenizedPhrase: [</span>
+<span class="hljs-comment">//        { token: 'not', tag: 'word' },</span>
+<span class="hljs-comment">//        { token: 'a', tag: 'word' },</span>
+<span class="hljs-comment">//        { token: 'good', tag: 'word', negation: true, score: -3 },</span>
+<span class="hljs-comment">//        { token: 'product', tag: 'word' }</span>
+<span class="hljs-comment">//      ]</span>
+<span class="hljs-comment">//    }</span>
+sentiment( <span class="hljs-string">'Excited to be part of the @imascientist team:-)!'</span> );
+<span class="hljs-comment">// -&gt; { score: 5,</span>
+<span class="hljs-comment">//      normalizedScore: 0.625,</span>
+<span class="hljs-comment">//      tokenizedPhrase: [</span>
+<span class="hljs-comment">//        { token: 'Excited', tag: 'word', score: 3 },</span>
+<span class="hljs-comment">//        { token: 'to', tag: 'word' },</span>
+<span class="hljs-comment">//        { token: 'be', tag: 'word' },</span>
+<span class="hljs-comment">//        { token: 'part', tag: 'word' },</span>
+<span class="hljs-comment">//        { token: 'of', tag: 'word' },</span>
+<span class="hljs-comment">//        { token: 'the', tag: 'word' },</span>
+<span class="hljs-comment">//        { token: '@imascientist', tag: 'mention' },</span>
+<span class="hljs-comment">//        { token: 'team', tag: 'word' },</span>
+<span class="hljs-comment">//        { token: ':-)', tag: 'emoticon', score: 2 },</span>
+<span class="hljs-comment">//        { token: '!', tag: 'punctuation' }</span>
+<span class="hljs-comment">//      ]</span>
+<span class="hljs-comment">//    }</span></pre>
     
   
 

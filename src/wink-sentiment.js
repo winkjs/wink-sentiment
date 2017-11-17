@@ -33,32 +33,59 @@ var tokenize = require( 'wink-tokenizer' )().tokenize;
 // ### tokens
 /**
  *
- * Computes the absolue and normalized sentiment scores of the input `phrase`.
+ * Computes the absolue and normalized sentiment scores of the input `phrase`,
+ * after tokenizing it.
+ *
  * The normalized score is computed by dividing the absolute score by the number
  * of tokens; this is always between -5 and +5. A score of less than 0 indicates
  * negative sentiments and a score of more than 0 indicates positive sentiments;
- * wheras a near zero score suggests a neutral sentiment.
+ * wheras a near zero score suggests a neutral sentiment. While counting tokens
+ * only the ones tagged as **`word`**, **`emoji`**, or **`emoticon`** are counted;
+ * and one letter words are ignored.
  *
- * @param {object[]} phrase — whoes sentiment score needs to be computed.
+ * It performs tokenization using [wink-tokenizer](http://winkjs.org/wink-tokenizer/).
+ * During sentiment analysis, each token may be assigned up to 3 new properties.
+ * These properties are:
+ *
+ * 1. **`score`** — contains the sentiment score of the word, which is always
+ * between -5 and +5. This is added only when the word in question has a positive or
+ * negative sentiment associated with it.
+ * 2. **`negation`** — is added & set to **true** whenever the `score` of the
+ * token has beeen impacted due to a negation word apprearing prior to it.
+ * 3. **`grouped`** — is added whenever, the token is the first
+ * word of a short idom or a phrase. It's value provides the number of tokens
+ * that have been grouped together to form the phrase/idom.
+ *
+ * @param {string} phrase — whoes sentiment score needs to be computed.
  * @return {object} — absolute `score`, `normalizedScore` and `tokenizedPhrase` of `phrase`.
  *
  * @example
- * sentiment( [ { token: 'not', tag: 'word' },
- *                     { token: 'a', tag: 'word' },
- *                     { token: 'good', tag: 'word' },
- *                     { token: 'product', tag: 'word' } ] );
- * // -> { score: -3, normalizedScore: -1 }
- * sentiment( [ { token: 'Excited', tag: 'word' },
- *                     { token: 'to', tag: 'word' },
- *                     { token: 'be', tag: 'word' },
- *                     { token: 'part', tag: 'word' },
- *                     { token: 'of', tag: 'word' },
- *                     { token: 'the', tag: 'word' },
- *                     { token: '@imascientist', tag: 'mention' },
- *                     { token: 'team', tag: 'word' },
- *                     { token: ':-)', tag: 'emoticon' },
- *                     { token: '!', tag: 'punctuation' } ] );
- * // { score: 3, normalizedScore: 0.21428571428571427 }
+ * sentiment( 'not a good product' );
+ * // -> { score: -3,
+ * //      normalizedScore: -1,
+ * //      tokenizedPhrase: [
+ * //        { token: 'not', tag: 'word' },
+ * //        { token: 'a', tag: 'word' },
+ * //        { token: 'good', tag: 'word', negation: true, score: -3 },
+ * //        { token: 'product', tag: 'word' }
+ * //      ]
+ * //    }
+ * sentiment( 'Excited to be part of the @imascientist team:-)!' );
+ * // -> { score: 5,
+ * //      normalizedScore: 0.625,
+ * //      tokenizedPhrase: [
+ * //        { token: 'Excited', tag: 'word', score: 3 },
+ * //        { token: 'to', tag: 'word' },
+ * //        { token: 'be', tag: 'word' },
+ * //        { token: 'part', tag: 'word' },
+ * //        { token: 'of', tag: 'word' },
+ * //        { token: 'the', tag: 'word' },
+ * //        { token: '@imascientist', tag: 'mention' },
+ * //        { token: 'team', tag: 'word' },
+ * //        { token: ':-)', tag: 'emoticon', score: 2 },
+ * //        { token: '!', tag: 'punctuation' }
+ * //      ]
+ * //    }
  */
 var sentiment = function ( phrase ) {
   if ( typeof phrase !== 'string' ) {
