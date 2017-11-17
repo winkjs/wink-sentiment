@@ -17,47 +17,131 @@ describe( 'basic test cycle', function () {
   } );
 
   it( 'should return a score of 4/1.333 with "I am feeling good"', function () {
-    expect( ws( 'I am feeling good' ) ).to.deep.equal( { score: 4, normalizedScore: 1.3333333333333333 } );
+    expect( ws( 'I am feeling good' ) ).to.deep.equal( {
+      score: 4,
+      normalizedScore: 1.3333333333333333,
+      tokenizedPhrase: [
+        { token: 'I', tag: 'word' },
+        { token: 'am', tag: 'word' },
+        { token: 'feeling', tag: 'word', score: 1 },
+        { token: 'good', tag: 'word', score: 3 }
+      ]
+    } );
   } );
 
   it( 'should return a score of -3/-1 with "not a good product"', function () {
-    expect( ws( 'not a good product' ) ).to.deep.equal( { score: -3, normalizedScore: -1 } );
+    expect( ws( 'not a good product' ) ).to.deep.equal( {
+       score: -3,
+       normalizedScore: -1,
+       tokenizedPhrase: [
+         { token: 'not', tag: 'word' },
+         { token: 'a', tag: 'word' },
+         { token: 'good', tag: 'word', score: -3, negation: true },
+         { token: 'product', tag: 'word' }
+       ]
+     } );
   } );
 
-  it( 'should return a score of 3/1.5 with "not a good product"', function () {
-    expect( ws( 'good product' ) ).to.deep.equal( { score: 3, normalizedScore: 1.5 } );
+  it( 'should return a score of 3/1.5 with "good product"', function () {
+    expect( ws( 'good product' ) ).to.deep.equal( {
+       score: 3,
+       normalizedScore: 1.5,
+       tokenizedPhrase: [
+         { token: 'good', tag: 'word', score: 3 },
+         { token: 'product', tag: 'word' }
+       ]
+     } );
   } );
 
   it( 'should return a score of -2/-1 with "bad luck"', function () {
-    expect( ws( 'bad luck' ) ).to.deep.equal( { score: -2, normalizedScore: -1 } );
+    expect( ws( 'bad luck' ) ).to.deep.equal( {
+      score: -2,
+      normalizedScore: -1,
+      tokenizedPhrase: [
+        { token: 'bad', tag: 'word', score: -2, grouped: 1 },
+        { token: 'luck', tag: 'word' }
+      ]
+    } );
   } );
 
   it( 'should return a score of 2/0.666 with "not bad luck"', function () {
-    expect( ws( 'not bad luck' ) ).to.deep.equal( { score: 2, normalizedScore: 0.6666666666666666 } );
+    expect( ws( 'not bad luck' ) ).to.deep.equal( {
+      score: 2,
+      normalizedScore: 0.6666666666666666,
+      tokenizedPhrase: [
+        { token: 'not', tag: 'word' },
+        { token: 'bad', tag: 'word', score: 2, negation: true, grouped: 1 },
+        { token: 'luck', tag: 'word' }
+      ]
+    } );
   } );
 
   it( 'should return a score of 6/2 with "love you <3"', function () {
-    expect( ws( 'love you <3' ) ).to.deep.equal( { score: 6, normalizedScore: 2 } );
+    expect( ws( 'love you <3' ) ).to.deep.equal( {
+      score: 6,
+      normalizedScore: 2,
+      tokenizedPhrase: [
+        { token: 'love', tag: 'word', score: 3 },
+        { token: 'you', tag: 'word' },
+        { token: '<3', tag: 'emoticon', score: 3 }
+      ]
+    } );
   } );
 
   it( 'should return a score of 6/2 with "love you<3"', function () {
-    expect( ws( 'love you<3' ) ).to.deep.equal( { score: 6, normalizedScore: 2 } );
+    expect( ws( 'love you<3' ) ).to.deep.equal( {
+      score: 6,
+      normalizedScore: 2,
+      tokenizedPhrase: [
+        { token: 'love', tag: 'word', score: 3 },
+        { token: 'you', tag: 'word' },
+        { token: '<3', tag: 'emoticon', score: 3 }
+      ]
+    } );
   } );
 
   it( 'should return a score of 8/2 with "love you<3 :)"', function () {
-    expect( ws( 'love you<3 :)' ) ).to.deep.equal( { score: 8, normalizedScore: 2 } );
+    expect( ws( 'love you<3 :)' ) ).to.deep.equal( {
+      score: 8,
+      normalizedScore: 2,
+      tokenizedPhrase: [
+        { token: 'love', tag: 'word', score: 3 },
+        { token: 'you', tag: 'word' },
+        { token: '<3', tag: 'emoticon', score: 3 },
+        { token: ':)', tag: 'emoticon', score: 2 }
+      ]
+    } );
   } );
 
   it( 'should return a score of 12/2.4 with "love you<3 😍😃"', function () {
-    expect( ws( 'love you<3 😍😃' ) ).to.deep.equal( { score: 12, normalizedScore: 2.4 } );
+    expect( ws( 'love you<3 😍😃' ) ).to.deep.equal( {
+      score: 12,
+      normalizedScore: 2.4,
+      tokenizedPhrase: [
+        { token: 'love', tag: 'word', score: 3 },
+        { token: 'you', tag: 'word' },
+        { token: '<3', tag: 'emoticon', score: 3 },
+        { token: '😍', tag: 'emoji', score: 3 },
+        { token: '😃', tag: 'emoji', score: 3 }
+      ]
+    } );
   } );
 
   it( 'should return a score of 0/0 with "unknownword"', function () {
-    expect( ws( 'unknownword' ) ).to.deep.equal( { score: 0, normalizedScore: 0 } );
+    expect( ws( 'unknownword' ) ).to.deep.equal( {
+      score: 0,
+      normalizedScore: 0,
+      tokenizedPhrase: [
+        { token: 'unknownword', tag: 'word' }
+      ]
+    } );
+  } );
+
+  it( 'should throw error with undefined input', function () {
+    expect( ws.bind( null ) ).to.throw( 'wink-sentiment: input phrase must be a string, instead found: undefined' );
   } );
 
   it( 'should throw error with non-string input', function () {
-    expect( ws.bind( null ) ).to.throw( 'wink-sentiment: input phrase must be a string, instead found: undefined' );
     expect( ws.bind( null, 10 ) ).to.throw( 'wink-sentiment: input phrase must be a string, instead found: number' );
   } );
 } );

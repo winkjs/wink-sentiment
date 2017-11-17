@@ -35,9 +35,9 @@
               
                 
                 <li><a
-                  href='#analyzesentiment'
+                  href='#sentiment'
                   class="">
-                  analyzeSentiment
+                  sentiment
                   
                 </a>
                 
@@ -97,22 +97,22 @@ Software Foundation, version 3 of the License.</p>
   
   <div class='clearfix'>
     
-    <h3 class='fl m0' id='analyzesentiment'>
-      analyzeSentiment
+    <h3 class='fl m0' id='sentiment'>
+      sentiment
     </h3>
     
     
   </div>
   
 
-  <p>Computes the absolue  and normalized sentiment scores of the input <code>phrase</code>.
+  <p>Computes the absolue and normalized sentiment scores of the input <code>phrase</code>.
 The normalized score is computed by dividing the absolute score by the number
-of tokens; this is always between -5 and +5. A score of <strong>less than 0</strong> indicates
-negative sentiments and a score of <strong>more than 0</strong> indicates positive sentiments;
-wheras a <strong>near zero</strong> score suggests a neutral sentiment.</p>
+of tokens; this is always between -5 and +5. A score of less than 0 indicates
+negative sentiments and a score of more than 0 indicates positive sentiments;
+wheras a near zero score suggests a neutral sentiment.</p>
 
 
-  <div class='pre p1 fill-light mt0'>analyzeSentiment(phrase: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></div>
+  <div class='pre p1 fill-light mt0'>sentiment(phrase: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></div>
   
   
 
@@ -129,7 +129,7 @@ wheras a <strong>near zero</strong> score suggests a neutral sentiment.</p>
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>phrase</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+            <span class='code bold'>phrase</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>>)</code>
 	    — whoes sentiment score needs to be computed.
 
           </div>
@@ -147,8 +147,10 @@ wheras a <strong>near zero</strong> score suggests a neutral sentiment.</p>
       <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></code>:
         — absolute 
 <code>score</code>
- and 
+, 
 <code>normalizedScore</code>
+ and 
+<code>tokenizedPhrase</code>
  of 
 <code>phrase</code>
 .
@@ -163,9 +165,21 @@ wheras a <strong>near zero</strong> score suggests a neutral sentiment.</p>
     <div class='py1 quiet mt1 prose-big'>Example</div>
     
       
-      <pre class='p1 overflow-auto round fill-light'>analyzeSentiment( <span class="hljs-string">'not a good product'</span> );
+      <pre class='p1 overflow-auto round fill-light'>sentiment( [ { <span class="hljs-attr">token</span>: <span class="hljs-string">'not'</span>, <span class="hljs-attr">tag</span>: <span class="hljs-string">'word'</span> },
+                    { <span class="hljs-attr">token</span>: <span class="hljs-string">'a'</span>, <span class="hljs-attr">tag</span>: <span class="hljs-string">'word'</span> },
+                    { <span class="hljs-attr">token</span>: <span class="hljs-string">'good'</span>, <span class="hljs-attr">tag</span>: <span class="hljs-string">'word'</span> },
+                    { <span class="hljs-attr">token</span>: <span class="hljs-string">'product'</span>, <span class="hljs-attr">tag</span>: <span class="hljs-string">'word'</span> } ] );
 <span class="hljs-comment">// -&gt; { score: -3, normalizedScore: -1 }</span>
-analyzeSentiment( <span class="hljs-string">'Excited to be part of the @imascientist team for the next couple of weeks!'</span> );
+sentiment( [ { <span class="hljs-attr">token</span>: <span class="hljs-string">'Excited'</span>, <span class="hljs-attr">tag</span>: <span class="hljs-string">'word'</span> },
+                    { <span class="hljs-attr">token</span>: <span class="hljs-string">'to'</span>, <span class="hljs-attr">tag</span>: <span class="hljs-string">'word'</span> },
+                    { <span class="hljs-attr">token</span>: <span class="hljs-string">'be'</span>, <span class="hljs-attr">tag</span>: <span class="hljs-string">'word'</span> },
+                    { <span class="hljs-attr">token</span>: <span class="hljs-string">'part'</span>, <span class="hljs-attr">tag</span>: <span class="hljs-string">'word'</span> },
+                    { <span class="hljs-attr">token</span>: <span class="hljs-string">'of'</span>, <span class="hljs-attr">tag</span>: <span class="hljs-string">'word'</span> },
+                    { <span class="hljs-attr">token</span>: <span class="hljs-string">'the'</span>, <span class="hljs-attr">tag</span>: <span class="hljs-string">'word'</span> },
+                    { <span class="hljs-attr">token</span>: <span class="hljs-string">'@imascientist'</span>, <span class="hljs-attr">tag</span>: <span class="hljs-string">'mention'</span> },
+                    { <span class="hljs-attr">token</span>: <span class="hljs-string">'team'</span>, <span class="hljs-attr">tag</span>: <span class="hljs-string">'word'</span> },
+                    { <span class="hljs-attr">token</span>: <span class="hljs-string">':-)'</span>, <span class="hljs-attr">tag</span>: <span class="hljs-string">'emoticon'</span> },
+                    { <span class="hljs-attr">token</span>: <span class="hljs-string">'!'</span>, <span class="hljs-attr">tag</span>: <span class="hljs-string">'punctuation'</span> } ] );
 <span class="hljs-comment">// { score: 3, normalizedScore: 0.21428571428571427 }</span></pre>
     
   

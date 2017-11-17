@@ -33,7 +33,8 @@
 /* eslint object-curly-newline: 0 */
 var afinn2Grams = {
   bad: {
-    luck: -2
+    luck: -2,
+    fit: -1
   },
   best: {
     damn: 4
