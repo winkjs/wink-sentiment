@@ -21,10 +21,10 @@ describe( 'basic test cycle', function () {
       score: 4,
       normalizedScore: 1.3333333333333333,
       tokenizedPhrase: [
-        { token: 'I', tag: 'word' },
-        { token: 'am', tag: 'word' },
-        { token: 'feeling', tag: 'word', score: 1 },
-        { token: 'good', tag: 'word', score: 3 }
+        { value: 'I', tag: 'word' },
+        { value: 'am', tag: 'word' },
+        { value: 'feeling', tag: 'word', score: 1 },
+        { value: 'good', tag: 'word', score: 3 }
       ]
     } );
   } );
@@ -34,10 +34,10 @@ describe( 'basic test cycle', function () {
        score: -3,
        normalizedScore: -1,
        tokenizedPhrase: [
-         { token: 'not', tag: 'word' },
-         { token: 'a', tag: 'word' },
-         { token: 'good', tag: 'word', score: -3, negation: true },
-         { token: 'product', tag: 'word' }
+         { value: 'not', tag: 'word' },
+         { value: 'a', tag: 'word' },
+         { value: 'good', tag: 'word', score: -3, negation: true },
+         { value: 'product', tag: 'word' }
        ]
      } );
   } );
@@ -47,8 +47,8 @@ describe( 'basic test cycle', function () {
        score: 3,
        normalizedScore: 1.5,
        tokenizedPhrase: [
-         { token: 'good', tag: 'word', score: 3 },
-         { token: 'product', tag: 'word' }
+         { value: 'good', tag: 'word', score: 3 },
+         { value: 'product', tag: 'word' }
        ]
      } );
   } );
@@ -58,8 +58,8 @@ describe( 'basic test cycle', function () {
       score: -2,
       normalizedScore: -1,
       tokenizedPhrase: [
-        { token: 'bad', tag: 'word', score: -2, grouped: 1 },
-        { token: 'luck', tag: 'word' }
+        { value: 'bad', tag: 'word', score: -2, grouped: 1 },
+        { value: 'luck', tag: 'word' }
       ]
     } );
   } );
@@ -69,9 +69,9 @@ describe( 'basic test cycle', function () {
       score: 2,
       normalizedScore: 0.6666666666666666,
       tokenizedPhrase: [
-        { token: 'not', tag: 'word' },
-        { token: 'bad', tag: 'word', score: 2, negation: true, grouped: 1 },
-        { token: 'luck', tag: 'word' }
+        { value: 'not', tag: 'word' },
+        { value: 'bad', tag: 'word', score: 2, negation: true, grouped: 1 },
+        { value: 'luck', tag: 'word' }
       ]
     } );
   } );
@@ -81,9 +81,9 @@ describe( 'basic test cycle', function () {
       score: 6,
       normalizedScore: 2,
       tokenizedPhrase: [
-        { token: 'love', tag: 'word', score: 3 },
-        { token: 'you', tag: 'word' },
-        { token: '<3', tag: 'emoticon', score: 3 }
+        { value: 'love', tag: 'word', score: 3 },
+        { value: 'you', tag: 'word' },
+        { value: '<3', tag: 'emoticon', score: 3 }
       ]
     } );
   } );
@@ -93,9 +93,9 @@ describe( 'basic test cycle', function () {
       score: 6,
       normalizedScore: 2,
       tokenizedPhrase: [
-        { token: 'love', tag: 'word', score: 3 },
-        { token: 'you', tag: 'word' },
-        { token: '<3', tag: 'emoticon', score: 3 }
+        { value: 'love', tag: 'word', score: 3 },
+        { value: 'you', tag: 'word' },
+        { value: '<3', tag: 'emoticon', score: 3 }
       ]
     } );
   } );
@@ -105,10 +105,10 @@ describe( 'basic test cycle', function () {
       score: 8,
       normalizedScore: 2,
       tokenizedPhrase: [
-        { token: 'love', tag: 'word', score: 3 },
-        { token: 'you', tag: 'word' },
-        { token: '<3', tag: 'emoticon', score: 3 },
-        { token: ':)', tag: 'emoticon', score: 2 }
+        { value: 'love', tag: 'word', score: 3 },
+        { value: 'you', tag: 'word' },
+        { value: '<3', tag: 'emoticon', score: 3 },
+        { value: ':)', tag: 'emoticon', score: 2 }
       ]
     } );
   } );
@@ -118,11 +118,11 @@ describe( 'basic test cycle', function () {
       score: 12,
       normalizedScore: 2.4,
       tokenizedPhrase: [
-        { token: 'love', tag: 'word', score: 3 },
-        { token: 'you', tag: 'word' },
-        { token: '<3', tag: 'emoticon', score: 3 },
-        { token: '😍', tag: 'emoji', score: 3 },
-        { token: '😃', tag: 'emoji', score: 3 }
+        { value: 'love', tag: 'word', score: 3 },
+        { value: 'you', tag: 'word' },
+        { value: '<3', tag: 'emoticon', score: 3 },
+        { value: '😍', tag: 'emoji', score: 3 },
+        { value: '😃', tag: 'emoji', score: 3 }
       ]
     } );
   } );
@@ -132,7 +132,7 @@ describe( 'basic test cycle', function () {
       score: 0,
       normalizedScore: 0,
       tokenizedPhrase: [
-        { token: 'unknownword', tag: 'word' }
+        { value: 'unknownword', tag: 'word' }
       ]
     } );
   } );

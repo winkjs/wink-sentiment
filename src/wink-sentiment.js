@@ -64,26 +64,26 @@ var tokenize = require( 'wink-tokenizer' )().tokenize;
  * // -> { score: -3,
  * //      normalizedScore: -1,
  * //      tokenizedPhrase: [
- * //        { token: 'not', tag: 'word' },
- * //        { token: 'a', tag: 'word' },
- * //        { token: 'good', tag: 'word', negation: true, score: -3 },
- * //        { token: 'product', tag: 'word' }
+ * //        { value: 'not', tag: 'word' },
+ * //        { value: 'a', tag: 'word' },
+ * //        { value: 'good', tag: 'word', negation: true, score: -3 },
+ * //        { value: 'product', tag: 'word' }
  * //      ]
  * //    }
  * sentiment( 'Excited to be part of the @imascientist team:-)!' );
  * // -> { score: 5,
  * //      normalizedScore: 0.625,
  * //      tokenizedPhrase: [
- * //        { token: 'Excited', tag: 'word', score: 3 },
- * //        { token: 'to', tag: 'word' },
- * //        { token: 'be', tag: 'word' },
- * //        { token: 'part', tag: 'word' },
- * //        { token: 'of', tag: 'word' },
- * //        { token: 'the', tag: 'word' },
- * //        { token: '@imascientist', tag: 'mention' },
- * //        { token: 'team', tag: 'word' },
- * //        { token: ':-)', tag: 'emoticon', score: 2 },
- * //        { token: '!', tag: 'punctuation' }
+ * //        { value: 'Excited', tag: 'word', score: 3 },
+ * //        { value: 'to', tag: 'word' },
+ * //        { value: 'be', tag: 'word' },
+ * //        { value: 'part', tag: 'word' },
+ * //        { value: 'of', tag: 'word' },
+ * //        { value: 'the', tag: 'word' },
+ * //        { value: '@imascientist', tag: 'mention' },
+ * //        { value: 'team', tag: 'word' },
+ * //        { value: ':-)', tag: 'emoticon', score: 2 },
+ * //        { value: '!', tag: 'punctuation' }
  * //      ]
  * //    }
  */
@@ -104,7 +104,7 @@ var sentiment = function ( phrase ) {
 
   for ( k = 0, kmax = tokenizedPhrase.length; k < kmax; k += 1 ) {
     tkn = tokenizedPhrase[ k ];
-    t = tkn.token;
+    t = tkn.value;
     switch ( tkn.tag ) {
       case 'emoji':
         tkn.score = emojis[ t ];
@@ -125,8 +125,8 @@ var sentiment = function ( phrase ) {
           if ( afinn[ t ] !== undefined ) {
             // Check for bigram configurations i.e. token at `k` and `k+1`. Accordingly
             // compute the sentiment score in `tss`.
-            if ( ( k < ( kmax - 1 ) ) && affin2Grams[ t ] && ( affin2Grams[ t ][ tokenizedPhrase[ k + 1 ].token ] !== undefined ) ) {
-              tss = affin2Grams[ t ][ tokenizedPhrase[ k + 1 ].token ];
+            if ( ( k < ( kmax - 1 ) ) && affin2Grams[ t ] && ( affin2Grams[ t ][ tokenizedPhrase[ k + 1 ].value ] !== undefined ) ) {
+              tss = affin2Grams[ t ][ tokenizedPhrase[ k + 1 ].value ];
               tkn.grouped = 1;
               // Will have to count `2` words!
               wc = 2;
@@ -134,7 +134,7 @@ var sentiment = function ( phrase ) {
               tss = afinn[ t ];
             }
             // Check for negation — upto two words ahead; even a bigram config may be negated!
-            if ( ( k > 0 && negations[ tokenizedPhrase[ k - 1 ].token ] ) || ( k > 1 && negations[ tokenizedPhrase[ k - 2 ].token ] ) ) {
+            if ( ( k > 0 && negations[ tokenizedPhrase[ k - 1 ].value ] ) || ( k > 1 && negations[ tokenizedPhrase[ k - 2 ].value ] ) ) {
               tss = -tss;
               tkn.negation = true;
             }

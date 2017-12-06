@@ -70,7 +70,7 @@
 <li>Intelligent negation handling; for example, phrase "good product" will get a positive score whereas "not a good product" gets a negative score.</li>
 <li>Automatic detection and scoring of two-word phrases in a text; for example, "cool stuff", "well done", and "short sighted".</li>
 <li>Processes each emoji and/or emoticon separately while scoring.</li>
-<li>Embeds a powerful tokenizer.</li>
+<li>Embeds a powerful <a href="https://www.npmjs.com/package/wink-tokenizer">tokenizer</a> that returns the tokenized phrase.</li>
 <li>Returns the sentiment score and tokens. Each token contains a set of properties defining its sentiment, if any.</li>
 <li>Achieves accuracy of 77%, when validated using Amazon Product Review <a href="https://archive.ics.uci.edu/ml/machine-learning-databases/00331/">Sentiment Labelled Sentences Data Set</a> at
 <a href="https://archive.ics.uci.edu/ml/index.php">UCI Machine Learning Repository</a>.</li>
@@ -79,8 +79,30 @@
 <p>Use <a href="https://www.npmjs.com/package/wink-sentiment">npm</a> to install:</p>
 <pre><code>npm install wink-sentiment --save
 </code></pre>
+<h3>Example</h3>
+<pre class='hljs'><span class="hljs-comment">// Load wink-sentiment package.</span>
+<span class="hljs-keyword">var</span> sentiment = <span class="hljs-built_in">require</span>( <span class="hljs-string">'wink-sentiment'</span> );
+<span class="hljs-comment">// Just give any phrase and checkout the sentiment score. A positive score</span>
+<span class="hljs-comment">// means a positive sentiment, whereas a negative score indicates a negative</span>
+<span class="hljs-comment">// sentiment. Neutral sentiment is signalled by a near zero score.</span>
+sentiment( <span class="hljs-string">'Excited to be part of the @imascientist team:-)!'</span> );
+<span class="hljs-comment">// -&gt; { score: 5,</span>
+<span class="hljs-comment">//      normalizedScore: 0.625,</span>
+<span class="hljs-comment">//      tokenizedPhrase: [</span>
+<span class="hljs-comment">//        { value: 'Excited', tag: 'word', score: 3 },</span>
+<span class="hljs-comment">//        { value: 'to', tag: 'word' },</span>
+<span class="hljs-comment">//        { value: 'be', tag: 'word' },</span>
+<span class="hljs-comment">//        { value: 'part', tag: 'word' },</span>
+<span class="hljs-comment">//        { value: 'of', tag: 'word' },</span>
+<span class="hljs-comment">//        { value: 'the', tag: 'word' },</span>
+<span class="hljs-comment">//        { value: '@imascientist', tag: 'mention' },</span>
+<span class="hljs-comment">//        { value: 'team', tag: 'word' },</span>
+<span class="hljs-comment">//        { value: ':-)', tag: 'emoticon', score: 2 },</span>
+<span class="hljs-comment">//        { value: '!', tag: 'punctuation' }</span>
+<span class="hljs-comment">//      ]</span>
+<span class="hljs-comment">//    }</span></pre>
 <h3>Documentation</h3>
-<p>For detailed API docs, check out <a href="http://winkjs.org/wink-sentiment/">http://winkjs.org/wink-sentiment/</a> URL!</p>
+<p>Check out the <a href="http://winkjs.org/wink-sentiment/">wink sentiment API</a> documentation to learn more.</p>
 <h3>Need Help?</h3>
 <p>If you spot a bug and the same has not yet been reported, raise a new <a href="https://github.com/winkjs/wink-sentiment/issues">issue</a> or consider fixing it and sending a pull request.</p>
 <h3>Copyright &#x26; License</h3>
@@ -187,26 +209,26 @@ that have been grouped together to form the phrase/idom.</li>
 <span class="hljs-comment">// -&gt; { score: -3,</span>
 <span class="hljs-comment">//      normalizedScore: -1,</span>
 <span class="hljs-comment">//      tokenizedPhrase: [</span>
-<span class="hljs-comment">//        { token: 'not', tag: 'word' },</span>
-<span class="hljs-comment">//        { token: 'a', tag: 'word' },</span>
-<span class="hljs-comment">//        { token: 'good', tag: 'word', negation: true, score: -3 },</span>
-<span class="hljs-comment">//        { token: 'product', tag: 'word' }</span>
+<span class="hljs-comment">//        { value: 'not', tag: 'word' },</span>
+<span class="hljs-comment">//        { value: 'a', tag: 'word' },</span>
+<span class="hljs-comment">//        { value: 'good', tag: 'word', negation: true, score: -3 },</span>
+<span class="hljs-comment">//        { value: 'product', tag: 'word' }</span>
 <span class="hljs-comment">//      ]</span>
 <span class="hljs-comment">//    }</span>
 sentiment( <span class="hljs-string">'Excited to be part of the @imascientist team:-)!'</span> );
 <span class="hljs-comment">// -&gt; { score: 5,</span>
 <span class="hljs-comment">//      normalizedScore: 0.625,</span>
 <span class="hljs-comment">//      tokenizedPhrase: [</span>
-<span class="hljs-comment">//        { token: 'Excited', tag: 'word', score: 3 },</span>
-<span class="hljs-comment">//        { token: 'to', tag: 'word' },</span>
-<span class="hljs-comment">//        { token: 'be', tag: 'word' },</span>
-<span class="hljs-comment">//        { token: 'part', tag: 'word' },</span>
-<span class="hljs-comment">//        { token: 'of', tag: 'word' },</span>
-<span class="hljs-comment">//        { token: 'the', tag: 'word' },</span>
-<span class="hljs-comment">//        { token: '@imascientist', tag: 'mention' },</span>
-<span class="hljs-comment">//        { token: 'team', tag: 'word' },</span>
-<span class="hljs-comment">//        { token: ':-)', tag: 'emoticon', score: 2 },</span>
-<span class="hljs-comment">//        { token: '!', tag: 'punctuation' }</span>
+<span class="hljs-comment">//        { value: 'Excited', tag: 'word', score: 3 },</span>
+<span class="hljs-comment">//        { value: 'to', tag: 'word' },</span>
+<span class="hljs-comment">//        { value: 'be', tag: 'word' },</span>
+<span class="hljs-comment">//        { value: 'part', tag: 'word' },</span>
+<span class="hljs-comment">//        { value: 'of', tag: 'word' },</span>
+<span class="hljs-comment">//        { value: 'the', tag: 'word' },</span>
+<span class="hljs-comment">//        { value: '@imascientist', tag: 'mention' },</span>
+<span class="hljs-comment">//        { value: 'team', tag: 'word' },</span>
+<span class="hljs-comment">//        { value: ':-)', tag: 'emoticon', score: 2 },</span>
+<span class="hljs-comment">//        { value: '!', tag: 'punctuation' }</span>
 <span class="hljs-comment">//      ]</span>
 <span class="hljs-comment">//    }</span></pre>
     
