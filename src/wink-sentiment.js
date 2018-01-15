@@ -162,4 +162,12 @@ var sentiment = function ( phrase ) {
   return { score: ss, normalizedScore: ( ss / words ), tokenizedPhrase: tokenizedPhrase };
 }; // sentiment()
 
-module.exports = sentiment;
+module.exports = function (options) {
+  if (options.emojis) Object.assign(emojis, options.emojis);
+  if (options.afinn) Object.assign(afinn, options.afinn);
+  if (options.emoticons) Object.assign(emoticons, options.emoticons);
+  if (options.negations) Object.assign(negations, options.negations);
+  if (options.affin2Grams) Object.assign(affin2Grams, options.affin2Grams);
+
+  return sentiment;
+};
