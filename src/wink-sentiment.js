@@ -116,6 +116,9 @@ var sentiment = function ( phrase ) {
         break;
       case 'emoticon':
         tkn.score = emoticons[ t ];
+        if (!tkn.score) {
+          tkn.score = 0;
+        }
         ss += tkn.score;
         words += 1;
         break;
