@@ -137,6 +137,16 @@ describe( 'basic test cycle', function () {
     } );
   } );
 
+  it( 'should return a score of 0/0 with unknown emoji "🚀"', function () {
+    expect( ws( '🚀' ) ).to.deep.equal( {
+      score: 0,
+      normalizedScore: 0,
+      tokenizedPhrase: [
+        { value: '🚀', tag: 'emoji', score: 0 }
+      ]
+    } );
+  } );
+
   it( 'should throw error with undefined input', function () {
     expect( ws.bind( null ) ).to.throw( 'wink-sentiment: input phrase must be a string, instead found: undefined' );
   } );

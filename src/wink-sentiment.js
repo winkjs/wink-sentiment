@@ -108,6 +108,9 @@ var sentiment = function ( phrase ) {
     switch ( tkn.tag ) {
       case 'emoji':
         tkn.score = emojis[ t ];
+        if (!tkn.score) {
+          tkn.score = 0;
+        }
         ss += tkn.score;
         words += 1;
         break;
