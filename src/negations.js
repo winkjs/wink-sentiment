@@ -1,7 +1,7 @@
 //     wink-sentiment
 //     Accurate and fast sentiment scoring of phrases with emoticons & emojis.
 //
-//     Copyright (C) 2017  GRAYPE Systems Private Limited
+//     Copyright (C) 2017-18  GRAYPE Systems Private Limited
 //
 //     This file is part of “wink-sentiment”.
 //
