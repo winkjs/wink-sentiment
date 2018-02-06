@@ -107,18 +107,14 @@ var sentiment = function ( phrase ) {
     t = tkn.value;
     switch ( tkn.tag ) {
       case 'emoji':
-        tkn.score = emojis[ t ];
-        if (!tkn.score) {
-          tkn.score = 0;
-        }
+        // Unknown emoji's score set to 0.
+        tkn.score = emojis[ t ] || 0;
         ss += tkn.score;
         words += 1;
         break;
       case 'emoticon':
-        tkn.score = emoticons[ t ];
-        if (!tkn.score) {
-          tkn.score = 0;
-        }
+        // Unknown emoticon's score set to 0.
+        tkn.score = emoticons[ t ] || 0;
         ss += tkn.score;
         words += 1;
         break;
@@ -162,12 +158,4 @@ var sentiment = function ( phrase ) {
   return { score: ss, normalizedScore: ( ss / words ), tokenizedPhrase: tokenizedPhrase };
 }; // sentiment()
 
-module.exports = function (options) {
-  if (options.emojis) Object.assign(emojis, options.emojis);
-  if (options.afinn) Object.assign(afinn, options.afinn);
-  if (options.emoticons) Object.assign(emoticons, options.emoticons);
-  if (options.negations) Object.assign(negations, options.negations);
-  if (options.affin2Grams) Object.assign(affin2Grams, options.affin2Grams);
-
-  return sentiment;
-};
+module.exports = sentiment;
