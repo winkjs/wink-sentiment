@@ -2,7 +2,7 @@
 
 Accurate and fast sentiment scoring of phrases with emoticons :) & emojis 🎉
 
-### [![Build Status](https://api.travis-ci.org/winkjs/wink-sentiment.svg?branch=master)](https://travis-ci.org/winkjs/wink-sentiment) [![Coverage Status](https://coveralls.io/repos/github/winkjs/wink-sentiment/badge.svg?branch=master)](https://coveralls.io/github/winkjs/wink-sentiment?branch=master) [![devDependencies Status](https://david-dm.org/winkjs/wink-sentiment/dev-status.svg)](https://david-dm.org/winkjs/wink-sentiment?type=dev)
+### [![Build Status](https://api.travis-ci.org/winkjs/wink-sentiment.svg?branch=master)](https://travis-ci.org/winkjs/wink-sentiment) [![Coverage Status](https://coveralls.io/repos/github/winkjs/wink-sentiment/badge.svg?branch=master)](https://coveralls.io/github/winkjs/wink-sentiment?branch=master) [![dependencies Status](https://david-dm.org/winkjs/wink-sentiment/status.svg)](https://david-dm.org/winkjs/wink-sentiment) [![devDependencies Status](https://david-dm.org/winkjs/wink-sentiment/dev-status.svg)](https://david-dm.org/winkjs/wink-sentiment?type=dev)
 
 [<img align="right" src="https://decisively.github.io/wink-logos/logo-title.png" width="100px" >](http://winkjs.org/)
 
