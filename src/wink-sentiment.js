@@ -49,7 +49,8 @@ var tokenize = require( 'wink-tokenizer' )().tokenize;
  *
  * 1. **`score`** — contains the sentiment score of the word, which is always
  * between -5 and +5. This is added only when the word in question has a positive or
- * negative sentiment associated with it.
+ * negative sentiment associated with it; however in the case of emoticons &
+ * emojis, `score` is always added with either +ve or -ve or a **0** value.
  * 2. **`negation`** — is added & set to **true** whenever the `score` of the
  * token has beeen impacted due to a negation word apprearing prior to it.
  * 3. **`grouped`** — is added whenever, the token is the first

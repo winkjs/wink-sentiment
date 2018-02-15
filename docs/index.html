@@ -143,7 +143,8 @@ These properties are:</p>
 <ol>
 <li><strong><code>score</code></strong> — contains the sentiment score of the word, which is always
 between -5 and +5. This is added only when the word in question has a positive or
-negative sentiment associated with it.</li>
+negative sentiment associated with it; however in the case of emoticons &#x26;
+emojis, <code>score</code> is always added with either +ve or -ve or a <strong>0</strong> value.</li>
 <li><strong><code>negation</code></strong> — is added &#x26; set to <strong>true</strong> whenever the <code>score</code> of the
 token has beeen impacted due to a negation word apprearing prior to it.</li>
 <li><strong><code>grouped</code></strong> — is added whenever, the token is the first
