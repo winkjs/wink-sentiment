@@ -39,10 +39,10 @@ describe( 'basic test cycle', function () {
     expect( ws( '  ' ) ).to.deep.equal( { score: 0, normalizedScore: 0 } );
   } );
 
-  it( 'should return a score of 4/1.333 with "I am feeling good"', function () {
+  it( 'should return a score of 4/2 with "I am feeling good"', function () {
     expect( ws( 'I am feeling good' ) ).to.deep.equal( {
       score: 4,
-      normalizedScore: 1.3333333333333333,
+      normalizedScore: 2,
       tokenizedPhrase: [
         { value: 'I', tag: 'word' },
         { value: 'am', tag: 'word' },
@@ -52,10 +52,10 @@ describe( 'basic test cycle', function () {
     } );
   } );
 
-  it( 'should return a score of -3/-1 with "not a good product"', function () {
+  it( 'should return a score of -3/-3 with "not a good product"', function () {
     expect( ws( 'not a good product' ) ).to.deep.equal( {
        score: -3,
-       normalizedScore: -1,
+       normalizedScore: -3,
        tokenizedPhrase: [
          { value: 'not', tag: 'word' },
          { value: 'a', tag: 'word' },
@@ -65,10 +65,10 @@ describe( 'basic test cycle', function () {
      } );
   } );
 
-  it( 'should return a score of 3/1.5 with "good product"', function () {
+  it( 'should return a score of 3/3 with "good product"', function () {
     expect( ws( 'good product' ) ).to.deep.equal( {
        score: 3,
-       normalizedScore: 1.5,
+       normalizedScore: 3,
        tokenizedPhrase: [
          { value: 'good', tag: 'word', score: 3 },
          { value: 'product', tag: 'word' }
@@ -76,33 +76,39 @@ describe( 'basic test cycle', function () {
      } );
   } );
 
-  it( 'should return a score of -2/-1 with "bad luck"', function () {
-    expect( ws( 'bad luck' ) ).to.deep.equal( {
+  it( 'should return a score of -2/-2 with "bad luck"', function () {
+    expect( ws( 'it was my bad luck' ) ).to.deep.equal( {
       score: -2,
-      normalizedScore: -1,
+      normalizedScore: -2,
       tokenizedPhrase: [
+        { value: 'it', tag: 'word' },
+        { value: 'was', tag: 'word' },
+        { value: 'my', tag: 'word' },
         { value: 'bad', tag: 'word', score: -2, grouped: 1 },
         { value: 'luck', tag: 'word' }
       ]
     } );
   } );
 
-  it( 'should return a score of 2/0.666 with "not bad luck"', function () {
-    expect( ws( 'not bad luck' ) ).to.deep.equal( {
+  it( 'should return a score of 2/2 with "not bad luck"', function () {
+    expect( ws( 'it was not my bad luck' ) ).to.deep.equal( {
       score: 2,
-      normalizedScore: 0.6666666666666666,
+      normalizedScore: 2,
       tokenizedPhrase: [
+        { value: 'it', tag: 'word' },
+        { value: 'was', tag: 'word' },
         { value: 'not', tag: 'word' },
+        { value: 'my', tag: 'word' },
         { value: 'bad', tag: 'word', score: 2, negation: true, grouped: 1 },
         { value: 'luck', tag: 'word' }
       ]
     } );
   } );
 
-  it( 'should return a score of 6/2 with "love you <3"', function () {
+  it( 'should return a score of 6/3 with "love you <3"', function () {
     expect( ws( 'love you <3' ) ).to.deep.equal( {
       score: 6,
-      normalizedScore: 2,
+      normalizedScore: 3,
       tokenizedPhrase: [
         { value: 'love', tag: 'word', score: 3 },
         { value: 'you', tag: 'word' },
@@ -111,10 +117,10 @@ describe( 'basic test cycle', function () {
     } );
   } );
 
-  it( 'should return a score of 6/2 with "love you<3"', function () {
+  it( 'should return a score of 6/3 with "love you<3"', function () {
     expect( ws( 'love you<3' ) ).to.deep.equal( {
       score: 6,
-      normalizedScore: 2,
+      normalizedScore: 3,
       tokenizedPhrase: [
         { value: 'love', tag: 'word', score: 3 },
         { value: 'you', tag: 'word' },
@@ -123,10 +129,10 @@ describe( 'basic test cycle', function () {
     } );
   } );
 
-  it( 'should return a score of 8/2 with "love you<3 :)"', function () {
+  it( 'should return a score of 8/2.6666666666666665 with "love you<3 :)"', function () {
     expect( ws( 'love you<3 :)' ) ).to.deep.equal( {
       score: 8,
-      normalizedScore: 2,
+      normalizedScore: 2.6666666666666665,
       tokenizedPhrase: [
         { value: 'love', tag: 'word', score: 3 },
         { value: 'you', tag: 'word' },
@@ -136,10 +142,10 @@ describe( 'basic test cycle', function () {
     } );
   } );
 
-  it( 'should return a score of 12/2.4 with "love you<3 😍😃"', function () {
+  it( 'should return a score of 12/3 with "love you<3 😍😃"', function () {
     expect( ws( 'love you<3 😍😃' ) ).to.deep.equal( {
       score: 12,
-      normalizedScore: 2.4,
+      normalizedScore: 3,
       tokenizedPhrase: [
         { value: 'love', tag: 'word', score: 3 },
         { value: 'you', tag: 'word' },
@@ -165,7 +171,7 @@ describe( 'basic test cycle', function () {
       score: 0,
       normalizedScore: 0,
       tokenizedPhrase: [
-        { value: '🚀', tag: 'emoji', score: 0 }
+        { value: '🚀', tag: 'emoji' }
       ]
     } );
   } );
@@ -175,7 +181,7 @@ describe( 'basic test cycle', function () {
       score: 0,
       normalizedScore: 0,
       tokenizedPhrase: [
-        { value: ';/', tag: 'emoticon', score: 0 }
+        { value: ';/', tag: 'emoticon' }
       ]
     } );
   } );

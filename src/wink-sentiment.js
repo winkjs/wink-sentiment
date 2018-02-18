@@ -30,7 +30,19 @@ var tokenize = require( 'wink-tokenizer' )().tokenize;
 
 /* eslint max-depth: 0 */
 
-// ### tokens
+var normalize = function ( hss, wss, sentiHashtags, sentiWords, totalWords ) {
+  let nhss = 0,
+      nwss = 0;
+  if ( sentiHashtags ) nhss = hss / sentiHashtags;
+  if ( sentiWords ) {
+    nwss = wss / sentiWords;
+    const avgLength = 15;
+    nwss /= Math.sqrt( ( totalWords > avgLength ) ? ( totalWords / avgLength ) : 1 );
+  }
+  return ( nhss ) ? ( ( nhss + nwss ) / 2 ) : nwss;
+};
+
+// ### sentiment
 /**
  *
  * Computes the absolue and normalized sentiment scores of the input `phrase`,
@@ -98,6 +110,11 @@ var sentiment = function ( phrase ) {
 
   // Sentiment Score.
   var ss = 0;
+  // Hash Tags SS.
+  var hss = 0;
+  // Number of sentiment containing hashtags and words encountered.
+  var sentiHashtags = 0,
+      sentiWords = 0;
   // Number of words encountered.
   var words = 0;
   // Helpers: for loop indexes, token, temp ss, and word count.
@@ -108,16 +125,30 @@ var sentiment = function ( phrase ) {
     t = tkn.value;
     switch ( tkn.tag ) {
       case 'emoji':
-        // Unknown emoji's score set to 0.
-        tkn.score = emojis[ t ] || 0;
-        ss += tkn.score;
+        tss = emojis[ t ];
+        if ( tss ) {
+          ss += tss;
+          tkn.score = tss;
+          sentiWords += 1;
+        }
         words += 1;
         break;
       case 'emoticon':
-        // Unknown emoticon's score set to 0.
-        tkn.score = emoticons[ t ] || 0;
-        ss += tkn.score;
+        tss = emoticons[ t ];
+        if ( tss ) {
+          ss += tss;
+          tkn.score = tss;
+          sentiWords += 1;
+        }
         words += 1;
+        break;
+      case 'hashtag':
+        tss = afinn[ t.slice( 1 ).toLowerCase ];
+        if ( tss ) {
+          tkn.score = tss;
+          hss += tss;
+          sentiHashtags += 1;
+        }
         break;
       case 'word':
         if ( t.length > 1 ) {
@@ -126,6 +157,7 @@ var sentiment = function ( phrase ) {
           // tkn.score = 0;
           // if  ( negations[ t ] ) tkn.negation = true;
           if ( afinn[ t ] !== undefined ) {
+            sentiWords += 1;
             // Check for bigram configurations i.e. token at `k` and `k+1`. Accordingly
             // compute the sentiment score in `tss`.
             if ( ( k < ( kmax - 1 ) ) && affin2Grams[ t ] && ( affin2Grams[ t ][ tokenizedPhrase[ k + 1 ].value ] !== undefined ) ) {
@@ -156,7 +188,11 @@ var sentiment = function ( phrase ) {
   }
   // if ( words === 0 ) words = 1;
   // Return score and its normalized value.
-  return { score: ss, normalizedScore: ( ss / words ), tokenizedPhrase: tokenizedPhrase };
+  return {
+    score: ss,
+    normalizedScore: normalize( hss, ss, sentiHashtags, sentiWords, words ),
+    tokenizedPhrase: tokenizedPhrase
+  };
 }; // sentiment()
 
 module.exports = sentiment;
