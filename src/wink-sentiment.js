@@ -39,7 +39,7 @@ var normalize = function ( hss, wss, sentiHashtags, sentiWords, totalWords ) {
     const avgLength = 15;
     nwss /= Math.sqrt( ( totalWords > avgLength ) ? ( totalWords / avgLength ) : 1 );
   }
-  return ( nhss ) ? ( ( nhss + nwss ) / 2 ) : nwss;
+  return ( nhss && nwss ) ? ( ( nhss + nwss ) / 2 ) : ( nwss || nhss );
 };
 
 // ### sentiment
@@ -143,7 +143,7 @@ var sentiment = function ( phrase ) {
         words += 1;
         break;
       case 'hashtag':
-        tss = afinn[ t.slice( 1 ).toLowerCase ];
+        tss = afinn[ t.slice( 1 ).toLowerCase() ];
         if ( tss ) {
           tkn.score = tss;
           hss += tss;
@@ -189,7 +189,7 @@ var sentiment = function ( phrase ) {
   // if ( words === 0 ) words = 1;
   // Return score and its normalized value.
   return {
-    score: ss,
+    score: ( ss + hss ),
     normalizedScore: normalize( hss, ss, sentiHashtags, sentiWords, words ),
     tokenizedPhrase: tokenizedPhrase
   };

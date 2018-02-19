@@ -186,6 +186,37 @@ describe( 'basic test cycle', function () {
     } );
   } );
 
+  it( 'should return a score of 12/3 with "#love you<3 😍😃 #unknown"', function () {
+    // This will ensure both known & unknown hashtags are tested.
+    expect( ws( '#love you<3 😍😃 #unknown' ) ).to.deep.equal( {
+      score: 12,
+      normalizedScore: 3,
+      tokenizedPhrase: [
+        { value: '#love', tag: 'hashtag', score: 3 },
+        { value: 'you', tag: 'word' },
+        { value: '<3', tag: 'emoticon', score: 3 },
+        { value: '😍', tag: 'emoji', score: 3 },
+        { value: '😃', tag: 'emoji', score: 3 },
+        { value: '#unknown', tag: 'hashtag' }
+      ]
+    } );
+  } );
+
+  it( 'should return a score of 12/3 with "It was a #fail product', function () {
+    // This will ensure both known & unknown hashtags are tested.
+    expect( ws( 'it was a #Fail product' ) ).to.deep.equal( {
+      score: -2,
+      normalizedScore: -2,
+      tokenizedPhrase: [
+        { value: 'it', tag: 'word' },
+        { value: 'was', tag: 'word' },
+        { value: 'a', tag: 'word' },
+        { value: '#Fail', tag: 'hashtag', score: -2 },
+        { value: 'product', tag: 'word' }
+      ]
+    } );
+  } );
+
   it( 'should throw error with undefined input', function () {
     expect( ws.bind( null ) ).to.throw( 'wink-sentiment: input phrase must be a string, instead found: undefined' );
   } );
