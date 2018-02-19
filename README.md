@@ -1,6 +1,6 @@
 # wink-sentiment
 
-Accurate and fast sentiment scoring of phrases with emoticons :) & emojis 🎉
+Accurate & fast sentiment scoring of phrases with #hashtags, emoticons:) & emojis🎉
 
 ### [![Build Status](https://api.travis-ci.org/winkjs/wink-sentiment.svg?branch=master)](https://travis-ci.org/winkjs/wink-sentiment) [![Coverage Status](https://coveralls.io/repos/github/winkjs/wink-sentiment/badge.svg?branch=master)](https://coveralls.io/github/winkjs/wink-sentiment?branch=master) [![dependencies Status](https://david-dm.org/winkjs/wink-sentiment/status.svg)](https://david-dm.org/winkjs/wink-sentiment) [![devDependencies Status](https://david-dm.org/winkjs/wink-sentiment/dev-status.svg)](https://david-dm.org/winkjs/wink-sentiment?type=dev)
 
@@ -12,7 +12,7 @@ It is based on [AFINN](https://arxiv.org/abs/1103.2903) and [Emoji Sentiment Ran
 
 1. Intelligent negation handling; for example, phrase "good product" will get a positive score whereas "not a good product" gets a negative score.
 2. Automatic detection and scoring of two-word phrases in a text; for example, "cool stuff", "well done", and "short sighted".
-3. Processes each emoji and/or emoticon separately while scoring.
+3. Processes each emoji, emoticon and/or hashtag separately while scoring.
 4. Embeds a powerful [tokenizer](https://www.npmjs.com/package/wink-tokenizer) that returns the tokenized phrase.
 5. Returns the sentiment score and tokens. Each token contains a set of properties defining its sentiment, if any.
 6. Achieves accuracy of 77%, when validated using Amazon Product Review [Sentiment Labelled Sentences Data Set](https://archive.ics.uci.edu/ml/machine-learning-databases/00331/) at
@@ -34,7 +34,7 @@ var sentiment = require( 'wink-sentiment' );
 // sentiment. Neutral sentiment is signalled by a near zero score.
 sentiment( 'Excited to be part of the @imascientist team:-)!' );
 // -> { score: 5,
-//      normalizedScore: 0.625,
+//      normalizedScore: 2.5,
 //      tokenizedPhrase: [
 //        { value: 'Excited', tag: 'word', score: 3 },
 //        { value: 'to', tag: 'word' },

@@ -1,5 +1,5 @@
 //     wink-sentiment
-//     Accurate and fast sentiment scoring of phrases with emoticons & emojis.
+//     Accurate and fast sentiment scoring of phrases with hashtags, emoticons & emojis.
 //
 //     Copyright (C) 2017-18  GRAYPE Systems Private Limited
 //

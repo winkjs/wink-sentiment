@@ -61,7 +61,7 @@
 
   
     <h1>wink-sentiment</h1>
-<p>Accurate and fast sentiment scoring of phrases with emoticons :) &#x26; emojis 🎉</p>
+<p>Accurate &#x26; fast sentiment scoring of phrases with #hashtags, emoticons:) &#x26; emojis🎉</p>
 <h3><a href="https://travis-ci.org/winkjs/wink-sentiment"><img src="https://api.travis-ci.org/winkjs/wink-sentiment.svg?branch=master" alt="Build Status"></a> <a href="https://coveralls.io/github/winkjs/wink-sentiment?branch=master"><img src="https://coveralls.io/repos/github/winkjs/wink-sentiment/badge.svg?branch=master" alt="Coverage Status"></a> <a href="https://david-dm.org/winkjs/wink-sentiment"><img src="https://david-dm.org/winkjs/wink-sentiment/status.svg" alt="dependencies Status"></a> <a href="https://david-dm.org/winkjs/wink-sentiment?type=dev"><img src="https://david-dm.org/winkjs/wink-sentiment/dev-status.svg" alt="devDependencies Status"></a></h3>
 <p><a href="http://winkjs.org/"><img align="right" src="https://decisively.github.io/wink-logos/logo-title.png" width="100px" ></a></p>
 <p>Analyze sentiment of tweets, product reviews, social media content or any text using <strong><code>wink-sentiment</code></strong>. It is a part of <em><a href="http://winkjs.org/">wink</a></em> — a growing family of high quality packages for Statistical Analysis, Natural Language Processing and Machine Learning in NodeJS.</p>
@@ -69,7 +69,7 @@
 <ol>
 <li>Intelligent negation handling; for example, phrase "good product" will get a positive score whereas "not a good product" gets a negative score.</li>
 <li>Automatic detection and scoring of two-word phrases in a text; for example, "cool stuff", "well done", and "short sighted".</li>
-<li>Processes each emoji and/or emoticon separately while scoring.</li>
+<li>Processes each emoji, emoticon and/or hashtag separately while scoring.</li>
 <li>Embeds a powerful <a href="https://www.npmjs.com/package/wink-tokenizer">tokenizer</a> that returns the tokenized phrase.</li>
 <li>Returns the sentiment score and tokens. Each token contains a set of properties defining its sentiment, if any.</li>
 <li>Achieves accuracy of 77%, when validated using Amazon Product Review <a href="https://archive.ics.uci.edu/ml/machine-learning-databases/00331/">Sentiment Labelled Sentences Data Set</a> at
@@ -87,7 +87,7 @@
 <span class="hljs-comment">// sentiment. Neutral sentiment is signalled by a near zero score.</span>
 sentiment( <span class="hljs-string">'Excited to be part of the @imascientist team:-)!'</span> );
 <span class="hljs-comment">// -&gt; { score: 5,</span>
-<span class="hljs-comment">//      normalizedScore: 0.625,</span>
+<span class="hljs-comment">//      normalizedScore: 2.5,</span>
 <span class="hljs-comment">//      tokenizedPhrase: [</span>
 <span class="hljs-comment">//        { value: 'Excited', tag: 'word', score: 3 },</span>
 <span class="hljs-comment">//        { value: 'to', tag: 'word' },</span>
@@ -131,8 +131,9 @@ Software Foundation, version 3 of the License.</p>
 
   <p>Computes the absolue and normalized sentiment scores of the input <code>phrase</code>,
 after tokenizing it.</p>
-<p>The normalized score is computed by dividing the absolute score by the number
-of tokens; this is always between -5 and +5. A score of less than 0 indicates
+<p>The normalized score is computed by taking into account of absolute scores of
+words, emojis, emoticons, and hashtags and adjusting it on the basis of total
+words in the text; this is always between -5 and +5. A score of less than 0 indicates
 negative sentiments and a score of more than 0 indicates positive sentiments;
 wheras a near zero score suggests a neutral sentiment. While counting tokens
 only the ones tagged as <strong><code>word</code></strong>, <strong><code>emoji</code></strong>, or <strong><code>emoticon</code></strong> are counted;
@@ -141,10 +142,9 @@ and one letter words are ignored.</p>
 During sentiment analysis, each token may be assigned up to 3 new properties.
 These properties are:</p>
 <ol>
-<li><strong><code>score</code></strong> — contains the sentiment score of the word, which is always
+<li><strong><code>score</code></strong> — contains the sentiment score of the word, emoji, emoticon or hashtag, which is always
 between -5 and +5. This is added only when the word in question has a positive or
-negative sentiment associated with it; however in the case of emoticons &#x26;
-emojis, <code>score</code> is always added with either +ve or -ve or a <strong>0</strong> value.</li>
+negative sentiment associated with it.</li>
 <li><strong><code>negation</code></strong> — is added &#x26; set to <strong>true</strong> whenever the <code>score</code> of the
 token has beeen impacted due to a negation word apprearing prior to it.</li>
 <li><strong><code>grouped</code></strong> — is added whenever, the token is the first
@@ -206,30 +206,15 @@ that have been grouped together to form the phrase/idom.</li>
     <div class='py1 quiet mt1 prose-big'>Example</div>
     
       
-      <pre class='p1 overflow-auto round fill-light'>sentiment( <span class="hljs-string">'not a good product'</span> );
-<span class="hljs-comment">// -&gt; { score: -3,</span>
-<span class="hljs-comment">//      normalizedScore: -1,</span>
+      <pre class='p1 overflow-auto round fill-light'>sentiment( <span class="hljs-string">'not a good product #fail'</span> );
+<span class="hljs-comment">// -&gt; { score: -5,</span>
+<span class="hljs-comment">//      normalizedScore: -2.5,</span>
 <span class="hljs-comment">//      tokenizedPhrase: [</span>
 <span class="hljs-comment">//        { value: 'not', tag: 'word' },</span>
 <span class="hljs-comment">//        { value: 'a', tag: 'word' },</span>
 <span class="hljs-comment">//        { value: 'good', tag: 'word', negation: true, score: -3 },</span>
-<span class="hljs-comment">//        { value: 'product', tag: 'word' }</span>
-<span class="hljs-comment">//      ]</span>
-<span class="hljs-comment">//    }</span>
-sentiment( <span class="hljs-string">'Excited to be part of the @imascientist team:-)!'</span> );
-<span class="hljs-comment">// -&gt; { score: 5,</span>
-<span class="hljs-comment">//      normalizedScore: 0.625,</span>
-<span class="hljs-comment">//      tokenizedPhrase: [</span>
-<span class="hljs-comment">//        { value: 'Excited', tag: 'word', score: 3 },</span>
-<span class="hljs-comment">//        { value: 'to', tag: 'word' },</span>
-<span class="hljs-comment">//        { value: 'be', tag: 'word' },</span>
-<span class="hljs-comment">//        { value: 'part', tag: 'word' },</span>
-<span class="hljs-comment">//        { value: 'of', tag: 'word' },</span>
-<span class="hljs-comment">//        { value: 'the', tag: 'word' },</span>
-<span class="hljs-comment">//        { value: '@imascientist', tag: 'mention' },</span>
-<span class="hljs-comment">//        { value: 'team', tag: 'word' },</span>
-<span class="hljs-comment">//        { value: ':-)', tag: 'emoticon', score: 2 },</span>
-<span class="hljs-comment">//        { value: '!', tag: 'punctuation' }</span>
+<span class="hljs-comment">//        { value: 'product', tag: 'word' },</span>
+<span class="hljs-comment">//        { value: '#fail', tag: 'hashtag', score: -2 }</span>
 <span class="hljs-comment">//      ]</span>
 <span class="hljs-comment">//    }</span></pre>
     

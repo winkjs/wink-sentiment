@@ -1,5 +1,5 @@
 //     wink-sentiment
-//     Accurate and fast sentiment scoring of phrases with emoticons & emojis.
+//     Accurate and fast sentiment scoring of phrases with hashtags, emoticons & emojis.
 //
 //     Copyright (C) 2017-18  GRAYPE Systems Private Limited
 //
@@ -33,7 +33,7 @@ var describe = mocha.describe;
 var it = mocha.it;
 
 // Validate stem test cases given by Dr Martin F Porter for Porter Stemmer Algoritm V2.
-describe( 'basic test cycle', function () {
+describe( 'sentiment', function () {
   it( 'should return a score of 0 with empty text', function () {
     expect( ws( '' ) ).to.deep.equal( { score: 0, normalizedScore: 0 } );
     expect( ws( '  ' ) ).to.deep.equal( { score: 0, normalizedScore: 0 } );
@@ -76,7 +76,7 @@ describe( 'basic test cycle', function () {
      } );
   } );
 
-  it( 'should return a score of -2/-2 with "bad luck"', function () {
+  it( 'should return a score of -2/-2 with "it was my bad luck"', function () {
     expect( ws( 'it was my bad luck' ) ).to.deep.equal( {
       score: -2,
       normalizedScore: -2,
@@ -90,7 +90,7 @@ describe( 'basic test cycle', function () {
     } );
   } );
 
-  it( 'should return a score of 2/2 with "not bad luck"', function () {
+  it( 'should return a score of 2/2 with "it was not my bad luck"', function () {
     expect( ws( 'it was not my bad luck' ) ).to.deep.equal( {
       score: 2,
       normalizedScore: 2,

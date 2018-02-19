@@ -1,5 +1,5 @@
 //     wink-sentiment
-//     Accurate and fast sentiment scoring of phrases with emoticons & emojis.
+//     Accurate and fast sentiment scoring of phrases with hashtags, emoticons & emojis.
 //
 //     Copyright (C) 2017-18  GRAYPE Systems Private Limited
 //
@@ -68,8 +68,9 @@ var normalize = function ( hss, wss, sentiHashtags, sentiWords, totalWords ) {
  * Computes the absolue and normalized sentiment scores of the input `phrase`,
  * after tokenizing it.
  *
- * The normalized score is computed by dividing the absolute score by the number
- * of tokens; this is always between -5 and +5. A score of less than 0 indicates
+ * The normalized score is computed by taking into account of absolute scores of
+ * words, emojis, emoticons, and hashtags and adjusting it on the basis of total
+ * words in the text; this is always between -5 and +5. A score of less than 0 indicates
  * negative sentiments and a score of more than 0 indicates positive sentiments;
  * wheras a near zero score suggests a neutral sentiment. While counting tokens
  * only the ones tagged as **`word`**, **`emoji`**, or **`emoticon`** are counted;
@@ -79,10 +80,9 @@ var normalize = function ( hss, wss, sentiHashtags, sentiWords, totalWords ) {
  * During sentiment analysis, each token may be assigned up to 3 new properties.
  * These properties are:
  *
- * 1. **`score`** — contains the sentiment score of the word, which is always
+ * 1. **`score`** — contains the sentiment score of the word, emoji, emoticon or hashtag, which is always
  * between -5 and +5. This is added only when the word in question has a positive or
- * negative sentiment associated with it; however in the case of emoticons &
- * emojis, `score` is always added with either +ve or -ve or a **0** value.
+ * negative sentiment associated with it.
  * 2. **`negation`** — is added & set to **true** whenever the `score` of the
  * token has beeen impacted due to a negation word apprearing prior to it.
  * 3. **`grouped`** — is added whenever, the token is the first
@@ -93,30 +93,15 @@ var normalize = function ( hss, wss, sentiHashtags, sentiWords, totalWords ) {
  * @return {object} — absolute `score`, `normalizedScore` and `tokenizedPhrase` of `phrase`.
  *
  * @example
- * sentiment( 'not a good product' );
- * // -> { score: -3,
- * //      normalizedScore: -1,
+ * sentiment( 'not a good product #fail' );
+ * // -> { score: -5,
+ * //      normalizedScore: -2.5,
  * //      tokenizedPhrase: [
  * //        { value: 'not', tag: 'word' },
  * //        { value: 'a', tag: 'word' },
  * //        { value: 'good', tag: 'word', negation: true, score: -3 },
- * //        { value: 'product', tag: 'word' }
- * //      ]
- * //    }
- * sentiment( 'Excited to be part of the @imascientist team:-)!' );
- * // -> { score: 5,
- * //      normalizedScore: 0.625,
- * //      tokenizedPhrase: [
- * //        { value: 'Excited', tag: 'word', score: 3 },
- * //        { value: 'to', tag: 'word' },
- * //        { value: 'be', tag: 'word' },
- * //        { value: 'part', tag: 'word' },
- * //        { value: 'of', tag: 'word' },
- * //        { value: 'the', tag: 'word' },
- * //        { value: '@imascientist', tag: 'mention' },
- * //        { value: 'team', tag: 'word' },
- * //        { value: ':-)', tag: 'emoticon', score: 2 },
- * //        { value: '!', tag: 'punctuation' }
+ * //        { value: 'product', tag: 'word' },
+ * //        { value: '#fail', tag: 'hashtag', score: -2 }
  * //      ]
  * //    }
  */
