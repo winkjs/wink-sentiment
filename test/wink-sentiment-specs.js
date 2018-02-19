@@ -202,7 +202,7 @@ describe( 'sentiment', function () {
     } );
   } );
 
-  it( 'should return a score of 12/3 with "It was a #fail product', function () {
+  it( 'should return a score of 12/3 with "It was a #fail product"', function () {
     // This will ensure both known & unknown hashtags are tested.
     expect( ws( 'it was a #Fail product' ) ).to.deep.equal( {
       score: -2,
@@ -213,6 +213,42 @@ describe( 'sentiment', function () {
         { value: 'a', tag: 'word' },
         { value: '#Fail', tag: 'hashtag', score: -2 },
         { value: 'product', tag: 'word' }
+      ]
+    } );
+  } );
+
+  it( 'should return a score of 5/2.0189 with >15 words sentence', function () {
+    // This will trigger condition when # words > 15 (average sentence length).
+    expect( ws( 'Sound quality on both end is excellent, I use headset to call my wife and ask my wife to use headset to call me!' ) ).to.deep.equal( {
+      score: 5,
+      normalizedScore: 2.0189321327181204,
+      tokenizedPhrase: [
+        { value: 'Sound', tag: 'word' },
+        { value: 'quality', tag: 'word', score: 2 },
+        { value: 'on', tag: 'word' },
+        { value: 'both', tag: 'word' },
+        { value: 'end', tag: 'word' },
+        { value: 'is', tag: 'word' },
+        { value: 'excellent', tag: 'word', score: 3 },
+        { value: ',', tag: 'punctuation' },
+        { value: 'I', tag: 'word' },
+        { value: 'use', tag: 'word' },
+        { value: 'headset', tag: 'word' },
+        { value: 'to', tag: 'word' },
+        { value: 'call', tag: 'word' },
+        { value: 'my', tag: 'word' },
+        { value: 'wife', tag: 'word' },
+        { value: 'and', tag: 'word' },
+        { value: 'ask', tag: 'word' },
+        { value: 'my', tag: 'word' },
+        { value: 'wife', tag: 'word' },
+        { value: 'to', tag: 'word' },
+        { value: 'use', tag: 'word' },
+        { value: 'headset', tag: 'word' },
+        { value: 'to', tag: 'word' },
+        { value: 'call', tag: 'word' },
+        { value: 'me', tag: 'word' },
+        { value: '!', tag: 'punctuation' }
       ]
     } );
   } );
