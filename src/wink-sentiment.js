@@ -30,17 +30,37 @@ var tokenize = require( 'wink-tokenizer' )().tokenize;
 
 /* eslint max-depth: 0 */
 
+// ### normalize
+/**
+ *
+ * Computes the normalized sentiment score from the absolute scores.
+ *
+ * @param {number} hss — absolute sentiment scrore of hashtags.
+ * @param {number} wss — absolute sentiment scrore of words/emojis/emoticons.
+ * @param {number} sentiHashtags — number of hashtags that have an associated sentiment score.
+ * @param {number} sentiWords — wnumber of words that have an associated sentiment score.
+ * @param {number} totalWords — total number of words in the text.
+ * @return {number} — normalized score.
+ * @private
+*/
 var normalize = function ( hss, wss, sentiHashtags, sentiWords, totalWords ) {
+  // **N**ormalized **h**ashtags & **w**ords **s**entiment **s**cores.
   let nhss = 0,
       nwss = 0;
+  // 1. Normalize hashtags sentiment score by computing the average.
   if ( sentiHashtags ) nhss = hss / sentiHashtags;
   if ( sentiWords ) {
+    // 2. Normalize words sentiment score by computing the average.
     nwss = wss / sentiWords;
+    // 3. Normalized words sentiment score is further adjusted on the basis of the
+    // total number of words in the text.
+    // Average sentence length in words (assumed).
     const avgLength = 15;
+    // Make adjustments.
     nwss /= Math.sqrt( ( totalWords > avgLength ) ? ( totalWords / avgLength ) : 1 );
   }
   return ( nhss && nwss ) ? ( ( nhss + nwss ) / 2 ) : ( nwss || nhss );
-};
+}; // normalize()
 
 // ### sentiment
 /**
