@@ -40,25 +40,39 @@ describe( 'sentiment', function () {
   } );
 
   it( 'should return a score of 4/2 with "I am feeling good"', function () {
-    expect( ws( 'I am feeling good' ) ).to.deep.equal( {
+    expect( ws( 'I am feeling Good' ) ).to.deep.equal( {
       score: 4,
       normalizedScore: 2,
       tokenizedPhrase: [
         { value: 'I', tag: 'word' },
         { value: 'am', tag: 'word' },
         { value: 'feeling', tag: 'word', score: 1 },
-        { value: 'good', tag: 'word', score: 3 }
+        { value: 'Good', tag: 'word', score: 3 }
       ]
     } );
   } );
 
-  it( 'should return a score of -3/-3 with "not a good product"', function () {
-    expect( ws( 'not a good product' ) ).to.deep.equal( {
+  it( 'should return a score of -3/-3 with "Not a good product"', function () {
+    // Case insensitive comparison at -2
+    expect( ws( 'Not a good product' ) ).to.deep.equal( {
        score: -3,
        normalizedScore: -3,
        tokenizedPhrase: [
-         { value: 'not', tag: 'word' },
+         { value: 'Not', tag: 'word' },
          { value: 'a', tag: 'word' },
+         { value: 'good', tag: 'word', score: -3, negation: true },
+         { value: 'product', tag: 'word' }
+       ]
+     } );
+  } );
+
+  it( 'should return a score of -3/-3 with "Not good product"', function () {
+    // Case insensitive comparison at -1
+    expect( ws( 'Not good product' ) ).to.deep.equal( {
+       score: -3,
+       normalizedScore: -3,
+       tokenizedPhrase: [
+         { value: 'Not', tag: 'word' },
          { value: 'good', tag: 'word', score: -3, negation: true },
          { value: 'product', tag: 'word' }
        ]
@@ -77,7 +91,8 @@ describe( 'sentiment', function () {
   } );
 
   it( 'should return a score of -2/-2 with "it was my bad luck"', function () {
-    expect( ws( 'it was my bad luck' ) ).to.deep.equal( {
+    // Test bi-gram config along with it's case insensitivity (**L**uck).
+    expect( ws( 'it was my bad Luck' ) ).to.deep.equal( {
       score: -2,
       normalizedScore: -2,
       tokenizedPhrase: [
@@ -85,7 +100,7 @@ describe( 'sentiment', function () {
         { value: 'was', tag: 'word' },
         { value: 'my', tag: 'word' },
         { value: 'bad', tag: 'word', score: -2, grouped: 1 },
-        { value: 'luck', tag: 'word' }
+        { value: 'Luck', tag: 'word' }
       ]
     } );
   } );
@@ -181,6 +196,19 @@ describe( 'sentiment', function () {
       score: 0,
       normalizedScore: 0,
       tokenizedPhrase: [
+        { value: ';/', tag: 'emoticon' }
+      ]
+    } );
+  } );
+
+  it( 'should return a handle a sentence with unknown emoji & emoticon', function () {
+    expect( ws( 'useless🚀 product;/' ) ).to.deep.equal( {
+      score: -2,
+      normalizedScore: -2,
+      tokenizedPhrase: [
+        { value: 'useless', tag: 'word', score: -2 },
+        { value: '🚀', tag: 'emoji' },
+        { value: 'product', tag: 'word' },
         { value: ';/', tag: 'emoticon' }
       ]
     } );

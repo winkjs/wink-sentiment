@@ -164,17 +164,17 @@ var sentiment = function ( phrase ) {
           if ( afinn[ t ] !== undefined ) {
             sentiWords += 1;
             // Check for bigram configurations i.e. token at `k` and `k+1`. Accordingly
-            // compute the sentiment score in `tss`.
-            if ( ( k < ( kmax - 1 ) ) && affin2Grams[ t ] && ( affin2Grams[ t ][ tokenizedPhrase[ k + 1 ].value ] !== undefined ) ) {
-              tss = affin2Grams[ t ][ tokenizedPhrase[ k + 1 ].value ];
+            // compute the sentiment score in `tss`. Convert to Lower Case for case insensitive comparison.
+            if ( ( k < ( kmax - 1 ) ) && affin2Grams[ t ] && ( affin2Grams[ t ][ tokenizedPhrase[ k + 1 ].value.toLowerCase() ] !== undefined ) ) {
+              tss = affin2Grams[ t ][ tokenizedPhrase[ k + 1 ].value.toLowerCase() ];
               tkn.grouped = 1;
               // Will have to count `2` words!
               wc = 2;
             } else {
               tss = afinn[ t ];
             }
-            // Check for negation — upto two words ahead; even a bigram config may be negated!
-            if ( ( k > 0 && negations[ tokenizedPhrase[ k - 1 ].value ] ) || ( k > 1 && negations[ tokenizedPhrase[ k - 2 ].value ] ) ) {
+            // Check for negation — upto two words ahead; even a bigram AFINN config may be negated! Convert to Lower Case for case insensitive comparison.
+            if ( ( k > 0 && negations[ tokenizedPhrase[ k - 1 ].value.toLowerCase() ] ) || ( k > 1 && negations[ tokenizedPhrase[ k - 2 ].value.toLowerCase() ] ) ) {
               tss = -tss;
               tkn.negation = true;
             }
@@ -201,3 +201,5 @@ var sentiment = function ( phrase ) {
 }; // sentiment()
 
 module.exports = sentiment;
+
+// console.log( sentiment( 'Not bad!! Love that there is a gluten-free, vegan version of the cheese curds and gravy!! Haven\'t done the poutine taste test yet with smoken\'s but Im excited to see which is better. However poutini\'s might win as they are vegan and gluten-free' ) );
