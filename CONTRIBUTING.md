@@ -2,6 +2,19 @@
 
 Thank you for taking time to contribute. We are delighted to receive contributions from the community. For wink every contribution matters — whether you are reporting a **bug**, posting a **question**, submitting a **pull request** or updating the **documentation**.
 
+## Getting Started
+1. Fork the repository from github
+2. Develop your code changes
+3. Ensure that the API is properly documented
+4. Capture the logic in comments
+4. Ensure proper linting via  `npm run pretest`
+5. Run tests using `npm run test`
+6. Make sure coverage either stays at the current levels or improves
+7. Commit your changes in compliance with commit guidelines
+8. Push to your fork
+9. Sign the CLA if you are contributing for the first time
+10. Finally, submit a pull request.
+
 
 ## Code of Conduct
 By contributing, you are expected to uphold [wink’s code of conduct](CODE_OF_CONDUCT.md). In essence, each one of us should:
@@ -16,21 +29,21 @@ By contributing, you are expected to uphold [wink’s code of conduct](CODE_OF_C
 ### About Wink
 Wink is a growing open source project focusing on **Natural Language Processing**, **Machine Learning** and **Statistics**. It contains multiple repositories or packages. All packages expose consistent and uniform APIs, thus minimizing the need to learn a new interface for each task. Do take out some time in understanding the structure of APIs, before attempting any enhancements. In wink, we prefer **functions** and **closures** over objects.
 
-Like the artisans, we also need a toolset and process to create beautiful software. The process is orchestrated by [Travis CI](https://travis-ci.org/) in accordance to the configuration files present in each repository. The next 5 sections outline the details and the tools in-use.
+Like artisans, we too need a toolset and process to create beautiful software. The process is orchestrated by [Travis CI](https://travis-ci.org/) in accordance to the configuration files present in each repository. The details and tools used are outlined below.
 
 
 ### Linting
-A set of well defined linting rules help us in making code more consistent and in early avoidance of bugs. [ESLint](https://eslint.org) and [JSHint](http://jshint.com/) combination enforces these rules for us via their configuration files. These files can be explored in each repository.
+Well defined linting rules helps us in making code more consistent and avoid bugs. [ESLint](https://eslint.org) and [JSHint](http://jshint.com/) enforces these rules via their configuration files. These files are in the root of each repository.
 
 
 ### Documenting
-We believe that the documentation must not only just explain the API but also narrate the story of logic, algorithm and references used. Therefore we expect you to follow the same spirit while coding. Wink uses [JSDoc](http://usejsdoc.org/) standards for API documentation and [Literate-Programming Standards](https://en.wikipedia.org/wiki/Literate_programming) for documenting the logic using [docker](http://jbt.github.io/docker/src/docker.js.html). The API documentation quality is measured using [Inch CI](https://inch-ci.org/) and we expect that your contribution will improve or maintain the current levels.
+We believe that the documentation must not only explain the API but also narrate the story of logic, algorithms and references used. Wink uses the [JSDoc](http://usejsdoc.org/) standard for API documentation and [Literate-Programming Standards](https://en.wikipedia.org/wiki/Literate_programming) for documenting the logic using [docker](http://jbt.github.io/docker/src/docker.js.html). The API documentation quality is measured using [Inch CI](https://inch-ci.org/) and we expect that your contribution will improve or maintain the current levels.
 
 ### Testing
-Wink aims for test coverage of preferably 100% or **atleast > 99.5%** to begin with. Any new contribution must maintain the existing test coverage level. We use [Chai](http://chaijs.com/), [Mocha](https://mochajs.org/) and [Istanbul](https://inch-ci.org/), [Coveralls](https://coveralls.io/) combos to run tests and to determine test coverage.
+Wink requires a test coverage of **atleast > 99.5%** and aims for 100%. Any new contribution must maintain the existing test coverage level. We use [Chai](http://chaijs.com/), [Mocha](https://mochajs.org/) and [Istanbul](https://inch-ci.org/), [Coveralls](https://coveralls.io/) to run tests and determine coverage.
 
 ### Committing
-We follow [commit guidelines](https://github.com/angular/angular.js/blob/master/DEVELOPERS.md#commits) from the Google's [Angular Project](https://angular.io/), whose documentation is licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). For quick reference, we are giving below important excerpts from the same:
+We follow [commit guidelines](https://github.com/angular/angular.js/blob/master/DEVELOPERS.md#commits) from the Google's [Angular Project](https://angular.io/), whose documentation is licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). See important excerpts for quick reference below:
 
 #### Commit Message Format
 Each commit message consists of a **header**, a **body** and a **footer**. The header has a special format that includes a **type**, a **scope** and a **subject**:
@@ -67,16 +80,3 @@ The header is **mandatory** and the scope of the header is optional. Any line of
 ### Contributor License Agreement (CLA)
 
 The [CLA](https://gist.github.com/sanjayaksaxena/8b96d3d4f2be6cdc0f28a5839d5a5b2a) is for your protection as well as the protection of [GRAYPE](http://graype.in) and it’s licensees; it does not change your rights to use your own Contributions for any other purpose. Our CLA is a short and easy to understand agreement and can be signed using a simple click-through form.  Please sign our Contributor License Agreement (CLA) before sending pull requests. It's a quick process, we promise!
-
-## Getting Started
-1. Fork the repository from github
-2. Develop your code changes
-3. Ensure that the API is properly documented
-4. Capture the logic in comments
-4. Ensure proper linting via  `npm run pretest`
-5. Run tests using `npm run test`
-6. Make sure coverage either stays at the current levels or improves
-7. Commit your changes in compliance with commit guidelines
-8. Push to your fork
-9. Sign the CLA if you are contributing for the first time
-10. Finally, submit a pull request.
