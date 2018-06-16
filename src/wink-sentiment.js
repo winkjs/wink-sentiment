@@ -86,8 +86,8 @@ var normalize = function ( hss, wss, sentiHashtags, sentiWords, totalWords ) {
  * 2. **`negation`** — is added & set to **true** whenever the `score` of the
  * token has beeen impacted due to a negation word apprearing prior to it.
  * 3. **`grouped`** — is added whenever, the token is the first
- * word of a short idom or a phrase. It's value provides the number of tokens
- * that have been grouped together to form the phrase/idom.
+ * word of a short idiom or a phrase. It's value provides the number of tokens
+ * that have been grouped together to form the phrase/idiom.
  *
  * @param {string} phrase — whoes sentiment score needs to be computed.
  * @return {object} — absolute `score`, `normalizedScore` and `tokenizedPhrase` of `phrase`.
