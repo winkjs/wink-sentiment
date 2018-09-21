@@ -1,5 +1,48 @@
-//     wink-sentiment
-//     Accurate and fast sentiment scoring of phrases with hashtags, emoticons & emojis.
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>wink-sentiment.js - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    
+    <h2><a href="index.html">Home</a></h2><h2><a href="https://github.com/winkjs/wink-sentiment" target="_blank" >Github</a></h2><h2><a href="http://winkjs.org" target="_blank" >Wink JS</a></h2><h3>Global</h3><ul><li><a href="global.html#sentiment">sentiment</a></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">wink-sentiment.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>//     wink-sentiment
+//     Accurate and fast sentiment scoring of phrases with hashtags, emoticons &amp; emojis.
 //
 //     Copyright (C) 2017-18  GRAYPE Systems Private Limited
 //
@@ -18,7 +61,7 @@
 //
 //     You should have received a copy of the GNU Affero
 //     General Public License along with “wink-sentiment”.
-//     If not, see <http://www.gnu.org/licenses/>.
+//     If not, see &lt;http://www.gnu.org/licenses/>.
 
 //
 var emojis = require( './emojis.js' );
@@ -44,7 +87,7 @@ var tokenize = require( 'wink-tokenizer' )().tokenize;
  * @private
 */
 var normalize = function ( hss, wss, sentiHashtags, sentiWords, totalWords ) {
-  // **N**ormalized **h**ashtags & **w**ords **s**entiment **s**cores.
+  // **N**ormalized **h**ashtags &amp; **w**ords **s**entiment **s**cores.
   let nhss = 0,
       nwss = 0;
   // 1. Normalize hashtags sentiment score by computing the average.
@@ -59,7 +102,7 @@ var normalize = function ( hss, wss, sentiHashtags, sentiWords, totalWords ) {
     // Make adjustments.
     nwss /= Math.sqrt( ( totalWords > avgLength ) ? ( totalWords / avgLength ) : 1 );
   }
-  return ( nhss && nwss ) ? ( ( nhss + nwss ) / 2 ) : ( nwss || nhss );
+  return ( nhss &amp;&amp; nwss ) ? ( ( nhss + nwss ) / 2 ) : ( nwss || nhss );
 }; // normalize()
 
 // ### sentiment
@@ -83,7 +126,7 @@ var normalize = function ( hss, wss, sentiHashtags, sentiWords, totalWords ) {
  * 1. **`score`** — contains the sentiment score of the word, emoji, emoticon or hashtag, which is always
  * between -5 and +5. This is added only when the word in question has a positive or
  * negative sentiment associated with it.
- * 2. **`negation`** — is added & set to **true** whenever the `score` of the
+ * 2. **`negation`** — is added &amp; set to **true** whenever the `score` of the
  * token has beeen impacted due to a negation word apprearing prior to it.
  * 3. **`grouped`** — is added whenever, the token is the first
  * word of a short idiom or a phrase. It's value provides the number of tokens
@@ -125,7 +168,7 @@ var sentiment = function ( phrase ) {
   // Helpers: for loop indexes, token, temp ss, and word count.
   var k, kmax, t, tkn, tss, wc;
 
-  for ( k = 0, kmax = tokenizedPhrase.length; k < kmax; k += 1 ) {
+  for ( k = 0, kmax = tokenizedPhrase.length; k &lt; kmax; k += 1 ) {
     tkn = tokenizedPhrase[ k ];
     t = tkn.value;
     switch ( tkn.tag ) {
@@ -165,7 +208,7 @@ var sentiment = function ( phrase ) {
             sentiWords += 1;
             // Check for bigram configurations i.e. token at `k` and `k+1`. Accordingly
             // compute the sentiment score in `tss`. Convert to Lower Case for case insensitive comparison.
-            if ( ( k < ( kmax - 1 ) ) && affin2Grams[ t ] && ( affin2Grams[ t ][ tokenizedPhrase[ k + 1 ].value.toLowerCase() ] !== undefined ) ) {
+            if ( ( k &lt; ( kmax - 1 ) ) &amp;&amp; affin2Grams[ t ] &amp;&amp; ( affin2Grams[ t ][ tokenizedPhrase[ k + 1 ].value.toLowerCase() ] !== undefined ) ) {
               tss = affin2Grams[ t ][ tokenizedPhrase[ k + 1 ].value.toLowerCase() ];
               tkn.grouped = 1;
               // Will have to count `2` words!
@@ -174,7 +217,7 @@ var sentiment = function ( phrase ) {
               tss = afinn[ t ];
             }
             // Check for negation — upto two words ahead; even a bigram AFINN config may be negated! Convert to Lower Case for case insensitive comparison.
-            if ( ( k > 0 && negations[ tokenizedPhrase[ k - 1 ].value.toLowerCase() ] ) || ( k > 1 && negations[ tokenizedPhrase[ k - 2 ].value.toLowerCase() ] ) ) {
+            if ( ( k > 0 &amp;&amp; negations[ tokenizedPhrase[ k - 1 ].value.toLowerCase() ] ) || ( k > 1 &amp;&amp; negations[ tokenizedPhrase[ k - 2 ].value.toLowerCase() ] ) ) {
               tss = -tss;
               tkn.negation = true;
             }
@@ -203,3 +246,26 @@ var sentiment = function ( phrase ) {
 module.exports = sentiment;
 
 // console.log( sentiment( 'Not bad!! Love that there is a gluten-free, vegan version of the cheese curds and gravy!! Haven\'t done the poutine taste test yet with smoken\'s but Im excited to see which is better. However poutini\'s might win as they are vegan and gluten-free' ) );
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Fri Sep 21 2018 12:37:30 GMT+0530 (IST) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+
+
+</body>
+</html>
