@@ -8,12 +8,12 @@
   "plugins": ["plugins/markdown"],
   "docdash": {
     "menu":{
-      "Github": {
-        "href":"https://github.com/winkjs/wink-sentiment",
-        "target":"_blank"
-      },
       "Wink JS": {
         "href":"http://winkjs.org",
+        "target":"_blank"
+      },
+      "Github": {
+        "href":"https://github.com/winkjs/wink-sentiment",
         "target":"_blank"
       }
     }
