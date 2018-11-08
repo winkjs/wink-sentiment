@@ -52,16 +52,14 @@
     <section class="readme">
         <article><h1>wink-sentiment</h1><p>Accurate &amp; fast sentiment scoring of phrases with #hashtags, emoticons:) &amp; emojis🎉</p>
 <h3><a href="https://travis-ci.org/winkjs/wink-sentiment"><img src="https://api.travis-ci.org/winkjs/wink-sentiment.svg?branch=master" alt="Build Status"></a> <a href="https://coveralls.io/github/winkjs/wink-sentiment?branch=master"><img src="https://coveralls.io/repos/github/winkjs/wink-sentiment/badge.svg?branch=master" alt="Coverage Status"></a> <a href="https://david-dm.org/winkjs/wink-sentiment"><img src="https://david-dm.org/winkjs/wink-sentiment/status.svg" alt="dependencies Status"></a> <a href="https://david-dm.org/winkjs/wink-sentiment?type=dev"><img src="https://david-dm.org/winkjs/wink-sentiment/dev-status.svg" alt="devDependencies Status"></a> <a href="https://gitter.im/winkjs/Lobby"><img src="https://img.shields.io/gitter/room/nwjs/nw.js.svg" alt="Gitter"></a></h3><p><a href="http://winkjs.org/"><img align="right" src="https://decisively.github.io/wink-logos/logo-title.png" width="100px" ></a></p>
-<p>Analyze sentiment of tweets, product reviews, social media content or any text using <strong><code>wink-sentiment</code></strong>. It is a part of <em><a href="http://winkjs.org/">wink</a></em> — a growing family of high quality packages for Statistical Analysis, Natural Language Processing and Machine Learning in NodeJS.</p>
-<p>It is based on <a href="https://arxiv.org/abs/1103.2903">AFINN</a> and <a href="http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0144296">Emoji Sentiment Ranking</a>; it's features include:</p>
+<p>Analyze sentiment of tweets, product reviews, social media content or any text using <strong><code>wink-sentiment</code></strong>. It is based on <a href="https://arxiv.org/abs/1103.2903">AFINN</a> and <a href="http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0144296">Emoji Sentiment Ranking</a>; it's features include:</p>
 <ol>
 <li>Intelligent negation handling; for example, phrase &quot;good product&quot; will get a positive score whereas &quot;not a good product&quot; gets a negative score.</li>
 <li>Automatic detection and scoring of two-word phrases in a text; for example, &quot;cool stuff&quot;, &quot;well done&quot;, and &quot;short sighted&quot;.</li>
 <li>Processes each emoji, emoticon and/or hashtag separately while scoring.</li>
 <li>Embeds a powerful <a href="https://www.npmjs.com/package/wink-tokenizer">tokenizer</a> that returns the tokenized phrase.</li>
 <li>Returns the sentiment score and tokens. Each token contains a set of properties defining its sentiment, if any.</li>
-<li>Achieves accuracy of 77%, when validated using Amazon Product Review <a href="https://archive.ics.uci.edu/ml/machine-learning-databases/00331/">Sentiment Labelled Sentences Data Set</a> at
-<a href="https://archive.ics.uci.edu/ml/index.php">UCI Machine Learning Repository</a>.</li>
+<li>Achieves accuracy of 77%, when validated using Amazon Product Review <a href="https://archive.ics.uci.edu/ml/machine-learning-databases/00331/">Sentiment Labelled Sentences Data Set</a> at <a href="https://archive.ics.uci.edu/ml/index.php">UCI Machine Learning Repository</a>.</li>
 </ol>
 <h3>Installation</h3><p>Use <a href="https://www.npmjs.com/package/wink-sentiment">npm</a> to install:</p>
 <pre class="prettyprint source"><code>npm install wink-sentiment --save</code></pre><h3>Example</h3><pre class="prettyprint source lang-javascript"><code>// Load wink-sentiment package.
@@ -86,9 +84,9 @@ sentiment( 'Excited to be part of the @imascientist team:-)!' );
 //      ]
 //    }</code></pre><h3>Documentation</h3><p>Check out the <a href="http://winkjs.org/wink-sentiment/">wink sentiment API</a> documentation to learn more.</p>
 <h3>Need Help?</h3><p>If you spot a bug and the same has not yet been reported, raise a new <a href="https://github.com/winkjs/wink-sentiment/issues">issue</a> or consider fixing it and sending a pull request.</p>
+<h3>About wink</h3><p><a href="http://winkjs.org/">Wink</a> is a family of open source packages for <strong>Statistical Analysis</strong>, <strong>Natural Language Processing</strong> and <strong>Machine Learning</strong> in NodeJS. The code is <strong>thoroughly documented</strong> for easy human comprehension and has a <strong>test coverage of ~100%</strong> for reliability to build production grade solutions.</p>
 <h3>Copyright &amp; License</h3><p><strong>wink-sentiment</strong> is copyright 2017-18 <a href="http://graype.in/">GRAYPE Systems Private Limited</a>.</p>
-<p>It is licensed under the under the terms of the GNU Affero General Public License as published by the Free
-Software Foundation, version 3 of the License.</p></article>
+<p>It is licensed under the terms of the MIT License.</p></article>
     </section>
 
 
@@ -103,7 +101,7 @@ Software Foundation, version 3 of the License.</p></article>
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Thu Oct 11 2018 12:36:18 GMT+0530 (IST) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Thu Nov 08 2018 12:26:31 GMT+0530 (IST) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>
