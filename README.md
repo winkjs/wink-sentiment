@@ -29,6 +29,8 @@ var sentiment = require( 'wink-sentiment' );
 // Just give any phrase and checkout the sentiment score. A positive score
 // means a positive sentiment, whereas a negative score indicates a negative
 // sentiment. Neutral sentiment is signalled by a near zero score.
+
+// Positive sentiment text.
 sentiment( 'Excited to be part of the @imascientist team:-)!' );
 // -> { score: 5,
 //      normalizedScore: 2.5,
@@ -43,6 +45,33 @@ sentiment( 'Excited to be part of the @imascientist team:-)!' );
 //        { value: 'team', tag: 'word' },
 //        { value: ':-)', tag: 'emoticon', score: 2 },
 //        { value: '!', tag: 'punctuation' }
+//      ]
+//    }
+
+// Negative sentiment text.
+console.log( sentiment( 'Not a good product :(' ) );
+// -> { score: -5,
+//      normalizedScore: -2.5,
+//      tokenizedPhrase: [
+//        { value: 'Not', tag: 'word' },
+//        { value: 'a', tag: 'word', negation: true },
+//        { value: 'good', tag: 'word', negation: true, score: -3 },
+//        { value: 'product', tag: 'word' },
+//        { value: ':(', tag: 'emoticon', score: -2 }
+//      ]
+//    }
+
+// Neutral sentiment text.
+console.log( sentiment( 'I will meet you tomorrow.' ) );
+// -> { score: 0,
+//      normalizedScore: 0,
+//      tokenizedPhrase: [
+//        { value: 'I', tag: 'word' },
+//        { value: 'will', tag: 'word' },
+//        { value: 'meet', tag: 'word' },
+//        { value: 'you', tag: 'word' },
+//        { value: 'tomorrow', tag: 'word' },
+//        { value: '.', tag: 'punctuation' }
 //      ]
 //    }
 ```
