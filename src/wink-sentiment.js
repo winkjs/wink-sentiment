@@ -159,36 +159,34 @@ var sentiment = function ( phrase ) {
         }
         break;
       case 'word':
-        if ( t.length > 1 ) {
-          t = t.toLowerCase();
-          wc = 1;
-          // tkn.score = 0;
-          // if  ( negations[ t ] ) tkn.negation = true;
-          if ( afinn[ t ] !== undefined ) {
-            sentiWords += 1;
-            // Check for bigram configurations i.e. token at `k` and `k+1`. Accordingly
-            // compute the sentiment score in `tss`. Convert to Lower Case for case insensitive comparison.
-            if ( ( k < ( kmax - 1 ) ) && affin2Grams[ t ] && ( affin2Grams[ t ][ tokenizedPhrase[ k + 1 ].value.toLowerCase() ] !== undefined ) ) {
-              tss = affin2Grams[ t ][ tokenizedPhrase[ k + 1 ].value.toLowerCase() ];
-              tkn.grouped = 1;
-              // Will have to count `2` words!
-              wc = 2;
-            } else {
-              tss = afinn[ t ];
-            }
-            // Check for negation — upto two words ahead; even a bigram AFINN config may be negated! Convert to Lower Case for case insensitive comparison.
-            if ( ( k > 0 && negations[ tokenizedPhrase[ k - 1 ].value.toLowerCase() ] ) || ( k > 1 && negations[ tokenizedPhrase[ k - 2 ].value.toLowerCase() ] ) ) {
-              tss = -tss;
-              tkn.negation = true;
-            }
-            ss += tss;
-            // Increment `k` by 1 if a bigram config was found earlier i.e. `wc` was set to **2**.
-            k += ( wc - 1 );
-            tkn.score = tss;
-          }
-          // Update number of words accordingly.
-          words += wc;
+        t = t.toLowerCase();
+        wc = 1;
+        // Check for bigram configurations i.e. token at `k` and `k+1`. Accordingly
+        // compute the sentiment score in `tss`. Convert to Lower Case for case insensitive comparison.
+        if ( ( k < ( kmax - 1 ) ) && affin2Grams[ t ] && ( affin2Grams[ t ][ tokenizedPhrase[ k + 1 ].value.toLowerCase() ] !== undefined ) ) {
+          tss = affin2Grams[ t ][ tokenizedPhrase[ k + 1 ].value.toLowerCase() ];
+          tkn.grouped = 1;
+          // Will have to count `2` words!
+          wc = 2;
+          // sentiWords += 1;
+        } else {
+          tss = afinn[ t ] || 0;
+          // sentiWords += 1;
         }
+        // Check for negation — upto two words ahead; even a bigram AFINN config may be negated! Convert to Lower Case for case insensitive comparison.
+        if ( ( k > 0 && negations[ tokenizedPhrase[ k - 1 ].value.toLowerCase() ] ) || ( k > 1 && negations[ tokenizedPhrase[ k - 2 ].value.toLowerCase() ] ) ) {
+          tss = -tss;
+          tkn.negation = true;
+        }
+        ss += tss;
+        // Increment `k` by 1 if a bigram config was found earlier i.e. `wc` was set to **2**.
+        k += ( wc - 1 );
+        if ( tss ) {
+          tkn.score = tss;
+          sentiWords += 1;
+        }
+        // Update number of words accordingly.
+        words += wc;
         break;
       default:
       // Do Nothing!
@@ -204,5 +202,3 @@ var sentiment = function ( phrase ) {
 }; // sentiment()
 
 module.exports = sentiment;
-
-// console.log( sentiment( 'Not bad!! Love that there is a gluten-free, vegan version of the cheese curds and gravy!! Haven\'t done the poutine taste test yet with smoken\'s but Im excited to see which is better. However poutini\'s might win as they are vegan and gluten-free' ) );

@@ -62,7 +62,7 @@ describe( 'sentiment', function () {
        normalizedScore: -3,
        tokenizedPhrase: [
          { value: 'Not', tag: 'word' },
-         { value: 'a', tag: 'word' },
+         { value: 'a', tag: 'word', negation: true },
          { value: 'good', tag: 'word', score: -3, negation: true },
          { value: 'product', tag: 'word' }
        ]
@@ -77,7 +77,7 @@ describe( 'sentiment', function () {
        tokenizedPhrase: [
          { value: 'Not', tag: 'word' },
          { value: 'good', tag: 'word', score: -3, negation: true },
-         { value: 'product', tag: 'word' }
+         { value: 'product', tag: 'word', negation: true }
        ]
      } );
   } );
@@ -116,7 +116,7 @@ describe( 'sentiment', function () {
         { value: 'it', tag: 'word' },
         { value: 'was', tag: 'word' },
         { value: 'not', tag: 'word' },
-        { value: 'my', tag: 'word' },
+        { value: 'my', tag: 'word', negation: true },
         { value: 'bad', tag: 'word', score: 2, negation: true, grouped: 1 },
         { value: 'luck', tag: 'word' }
       ]
@@ -248,11 +248,65 @@ describe( 'sentiment', function () {
     } );
   } );
 
-  it( 'should return a score of 5/2.0189 with >15 words sentence', function () {
+  it( 'should handle a phrase like cool stuff', function () {
+    // This will ensure both known & unknown hashtags are tested.
+    expect( ws( 'This a cool stuff!' ) ).to.deep.equal( {
+      score: 3,
+      normalizedScore: 3,
+      tokenizedPhrase: [
+        { value: 'This', tag: 'word' },
+        { value: 'a', tag: 'word' },
+        { value: 'cool', tag: 'word', grouped: 1, score: 3 },
+        { value: 'stuff', tag: 'word' },
+        { value: '!', tag: 'punctuation' }
+      ]
+    } );
+  } );
+
+  it( 'should handle phrase with negation', function () {
+    // This will ensure both known & unknown hashtags are tested.
+    expect( ws( 'Not so well done my boy! I am unhappy.' ) ).to.deep.equal( {
+      score: -5,
+      normalizedScore: -2.5,
+      tokenizedPhrase: [
+        { value: 'Not', tag: 'word' },
+        { value: 'so', tag: 'word', negation: true },
+        { value: 'well', tag: 'word', grouped: 1, negation: true, score: -3 },
+        { value: 'done', tag: 'word' },
+        { value: 'my', tag: 'word' },
+        { value: 'boy', tag: 'word' },
+        { value: '!', tag: 'punctuation' },
+        { value: 'I', tag: 'word' },
+        { value: 'am', tag: 'word' },
+        { value: 'unhappy', tag: 'word', score: -2 },
+        { value: '.', tag: 'punctuation' }
+      ]
+    } );
+  } );
+
+  it( 'should handle phrase without negation', function () {
+    // This will ensure both known & unknown hashtags are tested.
+    expect( ws( 'Sometimes I can be so short sighted.' ) ).to.deep.equal( {
+      score: -2,
+      normalizedScore: -2,
+      tokenizedPhrase: [
+        { value: 'Sometimes', tag: 'word' },
+        { value: 'I', tag: 'word' },
+        { value: 'can', tag: 'word' },
+        { value: 'be', tag: 'word' },
+        { value: 'so', tag: 'word' },
+        { value: 'short', tag: 'word', grouped: 1, score: -2 },
+        { value: 'sighted', tag: 'word' },
+        { value: '.', tag: 'punctuation' }
+      ]
+    } );
+  } );
+
+  it( 'should return a score of 5/1.9764 with >15 words sentence', function () {
     // This will trigger condition when # words > 15 (average sentence length).
     expect( ws( 'Sound quality on both end is excellent, I use headset to call my wife and ask my wife to use headset to call me!' ) ).to.deep.equal( {
       score: 5,
-      normalizedScore: 2.0189321327181204,
+      normalizedScore: 1.976423537605237,
       tokenizedPhrase: [
         { value: 'Sound', tag: 'word' },
         { value: 'quality', tag: 'word', score: 2 },
