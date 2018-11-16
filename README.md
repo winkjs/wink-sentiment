@@ -22,7 +22,7 @@ Use [npm](https://www.npmjs.com/package/wink-sentiment) to install:
 
     npm install wink-sentiment --save
 
-### Example
+### Getting Started
 ```javascript
 // Load wink-sentiment package.
 var sentiment = require( 'wink-sentiment' );
@@ -46,6 +46,7 @@ sentiment( 'Excited to be part of the @imascientist team:-)!' );
 //      ]
 //    }
 ```
+Try [experimenting with this example and more on Runkit](https://npm.runkit.com/wink-sentiment) in the browser.
 
 ### Documentation
 Check out the [wink sentiment API](http://winkjs.org/wink-sentiment/) documentation to learn more.
