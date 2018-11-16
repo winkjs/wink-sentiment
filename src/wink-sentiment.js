@@ -196,7 +196,7 @@ var sentiment = function ( phrase ) {
   // Return score and its normalized value.
   return {
     score: ( ss + hss ),
-    normalizedScore: normalize( hss, ss, sentiHashtags, sentiWords, words ),
+    normalizedScore: +( normalize( hss, ss, sentiHashtags, sentiWords, words ) ).toFixed( 4 ),
     tokenizedPhrase: tokenizedPhrase
   };
 }; // sentiment()

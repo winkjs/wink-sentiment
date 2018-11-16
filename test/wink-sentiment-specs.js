@@ -150,7 +150,7 @@ describe( 'sentiment', function () {
   it( 'should return a score of 8/2.6666666666666665 with "love you<3 :)"', function () {
     expect( ws( 'love you<3 :)' ) ).to.deep.equal( {
       score: 8,
-      normalizedScore: 2.6666666666666665,
+      normalizedScore: 2.6667,
       tokenizedPhrase: [
         { value: 'love', tag: 'word', score: 3 },
         { value: 'you', tag: 'word' },
@@ -306,7 +306,7 @@ describe( 'sentiment', function () {
     // This will trigger condition when # words > 15 (average sentence length).
     expect( ws( 'Sound quality on both end is excellent, I use headset to call my wife and ask my wife to use headset to call me!' ) ).to.deep.equal( {
       score: 5,
-      normalizedScore: 1.976423537605237,
+      normalizedScore: 1.9764,
       tokenizedPhrase: [
         { value: 'Sound', tag: 'word' },
         { value: 'quality', tag: 'word', score: 2 },
