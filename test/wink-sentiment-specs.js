@@ -374,7 +374,7 @@ describe( 'validate with amazon product review data from UCI', function () {
   var recall = tp / ( tp + fn );
   // Reduce verbosity of test output by moving `it` outside the `forEach`.
   it( 'it should achieve an accuracy of 77%', function () {
-    expect( Math.round( ( tp + tn ) * 100 / ( tp + tn + fp + fn ) ) ).to.equal( 77 );
+    expect( Math.round( ( tp + tn ) * 100 / ( tp + tn + fp + fn ) ) ).to.be.at.least( 77 );
   } );
 
   it( 'it should achieve an recall of 98%', function () {
