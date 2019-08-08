@@ -34,6 +34,10 @@
   ((window.gitter = {}).chat = {}).options = {
     room: 'winkjs/Lobby'
   };
+  window.onload = function () {
+      document.querySelector('.gitter-open-chat-button').innerText = 'Need help?'
+      document.querySelector('.gitter-open-chat-button').style.display = 'block';
+  }
 </script>
 <script src="https://sidecar.gitter.im/dist/sidecar.v1.js" async defer></script>
 <script>try{Typekit.load({ async: true });}catch(e){}</script>
@@ -68,7 +72,13 @@ body {
 .navbar a {
   color: #fff;
   line-height: 60px;
+  margin-left: 0;
+}
+
+.navbar a.navbar-brand {
   margin-left: 20px;
+  display: block;
+  min-width: 40px;
 }
 
 .navbar-right {
@@ -87,10 +97,6 @@ body {
 }
 
 /* Override docdash */
-nav {
-  top: 80px;
-}
-
 #main {
   margin-top: 30px;
 }
@@ -98,6 +104,7 @@ nav {
 /* Gitter */
 .gitter-open-chat-button {
   background: #6C307D;
+  display: none;
 }
 
 .gitter-open-chat-button:hover {
@@ -118,6 +125,16 @@ window.addEventListener('DOMContentLoaded', function () {
       window.scrollTo( 0, (window.pageYOffset || document.documentElement.scrollTop) - 72);
     }, 0)
   }
+
+  document.getElementById('toc-button').addEventListener('click', function () {
+      if (document.getElementById('side-nav').className === '') {
+        document.getElementById('side-nav').className = 'is-open';
+        document.getElementById('toc-button-img').setAttribute('src','./close.svg');
+      } else {
+        document.getElementById('side-nav').className = '';
+        document.getElementById('toc-button-img').setAttribute('src','./menu.svg');
+      }
+  })
 });
 
 window.addEventListener( 'hashchange', function (e) {
@@ -139,36 +156,32 @@ function openMember() {
       <div class="navbar-header">
         <a href="https://winkjs.org/" title="wink" class="navbar-brand">
           <img src="https://winkjs.org/images/logo.svg">
-          wink
+          <span>wink</span>
         </a>
       </div>
-      <ul class="nav navbar-nav navbar-right collapse navbar-collapse" id="main-nav">
-        <li><a href="https://winkjs.org/packages.html" class="">Packages</a></li>
-        <li><a href="https://winkjs.org/blog.html" class="">Blog</a></li>
-        <li><a href="http://github.com/winkjs">Github</a></li>
-        <li><a href="https://twitter.com/winkjs_org">Twitter</a></li>
-        <li><a href="https://winkjs.org/about.html" class="">About</a></li>
-      </ul>
+      <div class="sausage-links">
+        <ul class="nav navbar-nav navbar-right collapse navbar-collapse" id="main-nav">
+          <li><a href="https://winkjs.org/packages.html" class="">Packages</a></li>
+          <li><a href="https://winkjs.org/showcase.html" class="">Showcase</a></li>
+          <li><a href="https://winkjs.org/blog.html" class="">Blog</a></li>
+          <li><a href="http://github.com/winkjs">Github</a></li>
+          <li><a href="https://winkjs.org/about.html" class="">About</a></li>
+        </div>
+      </nav>
     </div>
 </header>
 
+<div id="toc-button">
+  <img src="./menu.svg" alt="" id="toc-button-img">
+</div>
 
-<input type="checkbox" id="nav-trigger" class="nav-trigger" />
-<label for="nav-trigger" class="navicon-button x">
-  <div class="navicon"></div>
-</label>
 
-<label for="nav-trigger" class="overlay"></label>
+<div class="content-container">
+  <div class="main-container">
+    <div id="main">
+        
 
-<nav >
-    
-    <h2><a href="index.html">Summary</a></h2><h2><a href="https://github.com/winkjs/wink-sentiment" target="_blank" >Github</a></h2><h3>Global</h3><ul><li><a href="global.html#sentiment">sentiment</a></li></ul>
-</nav>
-
-<div id="main">
-    
-
-    
+        
 
 
 
@@ -192,8 +205,10 @@ function openMember() {
 
 
     <section class="readme">
-        <article><h1>wink-sentiment</h1><p>Accurate &amp; fast sentiment scoring of phrases with #hashtags, emoticons:) &amp; emojis🎉</p>
-<h3><a href="https://travis-ci.org/winkjs/wink-sentiment"><img src="https://api.travis-ci.org/winkjs/wink-sentiment.svg?branch=master" alt="Build Status"></a> <a href="https://coveralls.io/github/winkjs/wink-sentiment?branch=master"><img src="https://coveralls.io/repos/github/winkjs/wink-sentiment/badge.svg?branch=master" alt="Coverage Status"></a> <a href="https://david-dm.org/winkjs/wink-sentiment"><img src="https://david-dm.org/winkjs/wink-sentiment/status.svg" alt="dependencies Status"></a> <a href="https://david-dm.org/winkjs/wink-sentiment?type=dev"><img src="https://david-dm.org/winkjs/wink-sentiment/dev-status.svg" alt="devDependencies Status"></a> <a href="https://gitter.im/winkjs/Lobby"><img src="https://img.shields.io/gitter/room/nwjs/nw.js.svg" alt="Gitter"></a></h3><p><a href="http://winkjs.org/"><img align="right" src="https://decisively.github.io/wink-logos/logo-title.png" width="100px" ></a></p>
+        <article><h1>wink-sentiment</h1>
+<p>Accurate &amp; fast sentiment scoring of phrases with #hashtags, emoticons:) &amp; emojis🎉</p>
+<h3><a href="https://travis-ci.org/winkjs/wink-sentiment"><img src="https://api.travis-ci.org/winkjs/wink-sentiment.svg?branch=master" alt="Build Status"></a> <a href="https://coveralls.io/github/winkjs/wink-sentiment?branch=master"><img src="https://coveralls.io/repos/github/winkjs/wink-sentiment/badge.svg?branch=master" alt="Coverage Status"></a> <a href="https://david-dm.org/winkjs/wink-sentiment"><img src="https://david-dm.org/winkjs/wink-sentiment/status.svg" alt="dependencies Status"></a> <a href="https://david-dm.org/winkjs/wink-sentiment?type=dev"><img src="https://david-dm.org/winkjs/wink-sentiment/dev-status.svg" alt="devDependencies Status"></a> <a href="https://gitter.im/winkjs/Lobby"><img src="https://img.shields.io/gitter/room/nwjs/nw.js.svg" alt="Gitter"></a></h3>
+<p><a href="http://winkjs.org/"><img align="right" src="https://decisively.github.io/wink-logos/logo-title.png" width="100px" ></a></p>
 <p>Analyze sentiment of tweets, product reviews, social media content or any text using <strong><code>wink-sentiment</code></strong>. It is based on <a href="https://arxiv.org/abs/1103.2903">AFINN</a> and <a href="http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0144296">Emoji Sentiment Ranking</a>; it's features include:</p>
 <ol>
 <li>Intelligent negation handling; for example, phrase &quot;good product&quot; will get a positive score whereas &quot;not a good product&quot; gets a negative score.</li>
@@ -203,8 +218,12 @@ function openMember() {
 <li>Returns the sentiment score and tokens. Each token contains a set of properties defining its sentiment, if any.</li>
 <li>Achieves accuracy of 77%, when validated using Amazon Product Review <a href="https://archive.ics.uci.edu/ml/machine-learning-databases/00331/">Sentiment Labelled Sentences Data Set</a> at <a href="https://archive.ics.uci.edu/ml/index.php">UCI Machine Learning Repository</a>.</li>
 </ol>
-<h3>Installation</h3><p>Use <a href="https://www.npmjs.com/package/wink-sentiment">npm</a> to install:</p>
-<pre class="prettyprint source"><code>npm install wink-sentiment --save</code></pre><h3>Getting Started</h3><pre class="prettyprint source lang-javascript"><code>// Load wink-sentiment package.
+<h3>Installation</h3>
+<p>Use <a href="https://www.npmjs.com/package/wink-sentiment">npm</a> to install:</p>
+<pre><code>npm install wink-sentiment --save
+</code></pre>
+<h3>Getting Started</h3>
+<pre class="prettyprint source lang-javascript"><code>// Load wink-sentiment package.
 var sentiment = require( 'wink-sentiment' );
 // Just give any phrase and checkout the sentiment score. A positive score
 // means a positive sentiment, whereas a negative score indicates a negative
@@ -253,11 +272,17 @@ console.log( sentiment( 'I will meet you tomorrow.' ) );
 //        { value: 'tomorrow', tag: 'word' },
 //        { value: '.', tag: 'punctuation' }
 //      ]
-//    }</code></pre><p>Try <a href="https://npm.runkit.com/wink-sentiment">experimenting with this example and more on Runkit</a> in the browser.</p>
-<h3>Documentation</h3><p>Check out the <a href="http://winkjs.org/wink-sentiment/">wink sentiment API</a> documentation to learn more.</p>
-<h3>Need Help?</h3><p>If you spot a bug and the same has not yet been reported, raise a new <a href="https://github.com/winkjs/wink-sentiment/issues">issue</a> or consider fixing it and sending a pull request.</p>
-<h3>About wink</h3><p><a href="http://winkjs.org/">Wink</a> is a family of open source packages for <strong>Statistical Analysis</strong>, <strong>Natural Language Processing</strong> and <strong>Machine Learning</strong> in NodeJS. The code is <strong>thoroughly documented</strong> for easy human comprehension and has a <strong>test coverage of ~100%</strong> for reliability to build production grade solutions.</p>
-<h3>Copyright &amp; License</h3><p><strong>wink-sentiment</strong> is copyright 2017-18 <a href="http://graype.in/">GRAYPE Systems Private Limited</a>.</p>
+//    }
+</code></pre>
+<p>Try <a href="https://npm.runkit.com/wink-sentiment">experimenting with this example and more on Runkit</a> in the browser.</p>
+<h3>Documentation</h3>
+<p>Check out the <a href="http://winkjs.org/wink-sentiment/">wink sentiment API</a> documentation to learn more.</p>
+<h3>Need Help?</h3>
+<p>If you spot a bug and the same has not yet been reported, raise a new <a href="https://github.com/winkjs/wink-sentiment/issues">issue</a> or consider fixing it and sending a pull request.</p>
+<h3>About wink</h3>
+<p><a href="http://winkjs.org/">Wink</a> is a family of open source packages for <strong>Statistical Analysis</strong>, <strong>Natural Language Processing</strong> and <strong>Machine Learning</strong> in NodeJS. The code is <strong>thoroughly documented</strong> for easy human comprehension and has a <strong>test coverage of ~100%</strong> for reliability to build production grade solutions.</p>
+<h3>Copyright &amp; License</h3>
+<p><strong>wink-sentiment</strong> is copyright 2017-18 <a href="http://graype.in/">GRAYPE Systems Private Limited</a>.</p>
 <p>It is licensed under the terms of the MIT License.</p></article>
     </section>
 
@@ -267,18 +292,40 @@ console.log( sentiment( 'I will meet you tomorrow.' ) );
 
 
 
-    
+        
+    </div>
+  </div>
+
+  <nav  id="side-nav">
+      
+      <h2><a href="index.html">Summary</a></h2><h2><a href="https://github.com/winkjs/wink-sentiment" target="_blank" >Github</a></h2><h3>Global</h3><ul><li><a href="global.html#sentiment">sentiment</a></li></ul>
+  </nav>
 </div>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Tue Apr 16 2019 13:58:32 GMT+0530 (India Standard Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Thu Aug 08 2019 20:49:19 GMT+0530 (IST) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>
 <script src="scripts/linenumber.js"></script>
 
 
+
+<script src="https://embed.runkit.com"></script>
+<script type="text/javascript">
+  var els = document.getElementsByClassName("runkit");
+
+  Array.prototype.forEach.call(els, function(el) {
+    // Do stuff here
+    var source = el.innerHTML;
+    el.innerHTML = '';
+    var n = RunKit.createNotebook( {
+      element: el,
+      source: source
+    } );
+  });
+</script>
 </body>
 </html>
